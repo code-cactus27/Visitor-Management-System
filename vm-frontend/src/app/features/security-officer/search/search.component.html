@@ -1,0 +1,17 @@
+<div class="search-container">
+    <div class="table-header">
+      <p><strong>Visitor Requests</strong></p>
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="onSearch()"
+          placeholder="Search by Name or Visitor ID..."
+        />
+      </div>
+    </div>
+    <!-- Pass filtered visits to the visitor table -->
+    <div>
+      <app-visitor-table [visits]="filteredVisits"></app-visitor-table>
+    </div>
+</div>

@@ -1,0 +1,457 @@
+<!--<div class="visitor-page" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">-->
+<!--  &lt;!&ndash; =========================================-->
+<!--       TABLE CARD-->
+<!--  ========================================== &ndash;&gt;-->
+<!--  <div class="table-card">-->
+<!--    &lt;!&ndash; HEADER &ndash;&gt;-->
+<!--    <div class="table-card-header">-->
+<!--      <div class="header-main">-->
+<!--        <div class="table-search">-->
+<!--          <i class="fas fa-search search-icon"></i>-->
+<!--          <input type="text" class="form-control" placeholder="Search by Visitor name or ID..." [(ngModel)]="searchText"-->
+<!--            (ngModelChange)="currentPage = 1" />-->
+<!--        </div>-->
+<!--        <div class="date-filters">-->
+<!--          <div class="filter-group">-->
+<!--            <label>From:</label>-->
+<!--            <input type="date" class="form-control" [(ngModel)]="fromDate" (ngModelChange)="currentPage = 1" />-->
+<!--          </div>-->
+<!--          <div class="filter-group">-->
+<!--            <label>To:</label>-->
+<!--            <input type="date" class="form-control" [(ngModel)]="toDate" (ngModelChange)="currentPage = 1" />-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; TABLE BODY &ndash;&gt;-->
+<!--    <div class="table-card-body">-->
+<!--      <div class="custom-table-scroll">-->
+<!--        <table class="table table-hover professional-table">-->
+<!--          &lt;!&ndash; TABLE HEAD &ndash;&gt;-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th class="col-name">-->
+<!--                Visitor Name-->
+<!--              </th>-->
+<!--              <th class="col-id">-->
+<!--                Visitor ID-->
+<!--              </th>-->
+<!--              <th class="col-company">-->
+<!--                Company-->
+<!--              </th>-->
+<!--              <th class="col-contact">-->
+<!--                Contact-->
+<!--              </th>-->
+<!--              <th class="col-actions text-center">-->
+<!--                Actions-->
+<!--              </th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          &lt;!&ndash; TABLE BODY &ndash;&gt;-->
+<!--          <tbody>-->
+<!--            <tr *ngFor="let v of paginatedVisitors">-->
+<!--              &lt;!&ndash; NAME &ndash;&gt;-->
+<!--              <td class="col-name" title="{{ v.name }}">-->
+<!--                <strong>{{ v.name }}</strong>-->
+<!--              </td>-->
+<!--              &lt;!&ndash; UNIQUE ID &ndash;&gt;-->
+<!--              <td class="col-id" title="{{ v.uniqueId }}">-->
+<!--                {{ v.uniqueId }}-->
+<!--              </td>-->
+<!--              &lt;!&ndash; COMPANY &ndash;&gt;-->
+<!--              <td class="col-company" title="{{ v.company }}">-->
+<!--                {{ v.company }}-->
+<!--              </td>-->
+<!--              &lt;!&ndash; CONTACT &ndash;&gt;-->
+<!--              <td class="col-contact" title="{{ v.contactNumber }}">-->
+<!--                {{ v.contactNumber }}-->
+<!--              </td>-->
+<!--              &lt;!&ndash; ACTIONS &ndash;&gt;-->
+<!--              <td class="col-actions action-cell text-center">-->
+<!--                <div class="action-wrap">-->
+<!--                  <button class="btn-action btn-edit" (click)="openEdit(v)" title="Edit Visitor">-->
+<!--                    <i class="fas fa-edit"></i>-->
+<!--                    <span>Edit</span>-->
+<!--                  </button>-->
+<!--                  <button class="btn-action btn-visit" (click)="openVisit(v)" title="Add Visit">-->
+<!--                    <i class="fas fa-user-plus"></i>-->
+<!--                    <span>Add Visit</span>-->
+<!--                  </button>-->
+<!--                  <button class="btn-action btn-view" (click)="openViewVisits(v)" title="View History">-->
+<!--                    <i class="fas fa-history"></i>-->
+<!--                    <span>History</span>-->
+<!--                  </button>-->
+<!--                  <button class="btn-action btn-delete" (click)="openDeletePopup(v)" title="Delete Visitor">-->
+<!--                    <i class="fas fa-trash-alt"></i>-->
+<!--                    <span>Delete</span>-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            &lt;!&ndash; EMPTY STATE &ndash;&gt;-->
+<!--            <tr *ngIf="!paginatedVisitors?.length">-->
+<!--              <td colspan="5" class="text-center py-5">-->
+<!--                No visitors found-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; =========================================-->
+<!--       PAGINATION-->
+<!--  ========================================== &ndash;&gt;-->
+<!--  <div class="pagination-wrapper">-->
+<!--    <button class="glass-btn" (click)="prevPage()" [disabled]="currentPage === 1">-->
+<!--      <i class="fa fa-chevron-left"></i>-->
+<!--      Prev-->
+<!--    </button>-->
+<!--    <span class="fw-semibold">-->
+<!--      Page {{ currentPage }} of {{ totalPages }}-->
+<!--    </span>-->
+<!--    <button class="glass-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">-->
+<!--      Next-->
+<!--      <i class="fa fa-chevron-right"></i>-->
+<!--    </button>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; =========================================-->
+<!--       EDIT FORM-->
+<!--  ========================================== &ndash;&gt;-->
+<!--  <app-visitor-edit-form *ngIf="isEditOpen" [visitor]="selectedVisitor" (close)="closeEdit()" (saved)="onSaved()">-->
+<!--  </app-visitor-edit-form>-->
+<!--  &lt;!&ndash; =========================================-->
+<!--       VISITOR REGISTER FORM-->
+<!--  ========================================== &ndash;&gt;-->
+<!--  <app-visitor-register-form *ngIf="showVisit" (close)="closeVisit()">-->
+<!--  </app-visitor-register-form>-->
+<!--  &lt;!&ndash; =========================================-->
+<!--       VISIT HISTORY MODAL-->
+<!--  ========================================== &ndash;&gt;-->
+<!--  <div class="visit-history-overlay" *ngIf="showVisitHistory">-->
+<!--    <div class="visit-history-dialog">-->
+<!--      &lt;!&ndash; HEADER &ndash;&gt;-->
+<!--      <div class="visit-history-header">-->
+<!--        <h5 class="mb-0">-->
+<!--          Visit History —-->
+<!--          {{ visitHistoryTitle || 'Visitor' }}-->
+<!--        </h5>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; LOADING &ndash;&gt;-->
+<!--      <div *ngIf="visitHistoryLoading" class="alert alert-secondary py-2 mt-3 mx-3">-->
+<!--        Loading visits...-->
+<!--      </div>-->
+<!--      &lt;!&ndash; ERROR &ndash;&gt;-->
+<!--      <div *ngIf="visitHistoryError" class="alert alert-danger py-2 mt-3 mx-3">-->
+<!--        {{ visitHistoryError }}-->
+<!--      </div>-->
+<!--      &lt;!&ndash; TABLE &ndash;&gt;-->
+<!--      <div class="visit-history-table-wrap" *ngIf="!visitHistoryLoading && !visitHistoryError">-->
+<!--        <div class="custom-table-scroll">-->
+<!--          <table class="table table-hover professional-table">-->
+<!--            <thead>-->
+<!--              <tr>-->
+<!--                <th>#</th>-->
+<!--                <th>Reason</th>-->
+<!--                <th>Visit Time</th>-->
+<!--                <th>Visit Date</th>-->
+<!--                <th>Duration</th>-->
+<!--                <th>Pass Expiry</th>-->
+<!--                <th>Status</th>-->
+<!--              </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--              <tr *ngFor="let visit of selectedVisitorVisits; let i = index">-->
+<!--                <td>-->
+<!--                  {{ i + 1 }}-->
+<!--                </td>-->
+<!--                <td title="{{ visit.reasonForVisit }}">-->
+<!--                  {{ visit.reasonForVisit }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  {{ visit.expectedTime ? visit.expectedTime : '-' }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  {{ visit.visitDate ? visit.visitDate : '-' }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  {{ visit.passDuration }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  {{ visit.passExpiry ? visit.passExpiry : 'REJECTED' }}-->
+<!--                </td>-->
+<!--                &lt;!&ndash; STATUS &ndash;&gt;-->
+<!--                <td>-->
+<!--                  <span [ngClass]="{-->
+<!--                    pending: visit.statusOnTime === 'PENDING',-->
+<!--                    checkedIn: visit.statusOnTime === 'CHECKED_IN',-->
+<!--                    checkedOut: visit.statusOnTime === 'CHECKED_OUT',-->
+<!--                    expired: visit.statusOnTime === 'EXPIRED'-->
+<!--                  }">-->
+<!--                    {{ visit.statusOnTime }}-->
+<!--                  </span>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              &lt;!&ndash; EMPTY &ndash;&gt;-->
+<!--              <tr *ngIf="!selectedVisitorVisits?.length">-->
+<!--                <td colspan="7" class="text-center py-5">-->
+<!--                  No visits found-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; FOOTER &ndash;&gt;-->
+<!--      <div class="visit-history-footer">-->
+<!--        <button class="glass-btn" (click)="closeViewVisits()">-->
+<!--          Close-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; =========================================-->
+<!--       DELETE MODAL-->
+<!--  ========================================== &ndash;&gt;-->
+<!--  <div class="delete-overlay" *ngIf="showDeletePopup">-->
+<!--    <div class="delete-modal">-->
+<!--      <h3>-->
+<!--        Confirm Delete-->
+<!--      </h3>-->
+<!--      <p>-->
+<!--        Are you sure you want to delete-->
+<!--        <strong id="modalDeleteName">{{ visitorToDelete?.name }}</strong> ?-->
+<!--      </p>-->
+<!--      <div class="delete-actions">-->
+<!--        <button class="glass-btn" id="deleteModalCancel" (click)="cancelDelete()">-->
+<!--          Cancel-->
+<!--        </button>-->
+<!--        <button class="action-btn delete" (click)="confirmDelete()">-->
+<!--          Delete-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="visitor-page" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+  <!-- =========================================
+       TABLE CARD
+  ========================================== -->
+  <div class="table-card">
+    <!-- HEADER -->
+    <div class="table-card-header">
+      <div class="header-main">
+        <!-- Search -->
+        <div class="table-search">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" class="form-control"
+                 placeholder="Search by Visitor name or ID..."
+                 [(ngModel)]="searchText"
+                 (ngModelChange)="currentPage = 1" />
+        </div>
+        <!-- Date filters -->
+        <div class="date-filters">
+          <div class="filter-group">
+            <label>From:</label>
+            <input type="date" class="form-control"
+                   [(ngModel)]="fromDate"
+                   (ngModelChange)="currentPage = 1" />
+          </div>
+          <div class="filter-group">
+            <label>To:</label>
+            <input type="date" class="form-control"
+                   [(ngModel)]="toDate"
+                   (ngModelChange)="currentPage = 1" />
+          </div>
+        </div>
+        <!-- View toggle -->
+        <div class="view-toggle">
+          <button class="toggle-btn"
+                  [class.active]="viewMode === 'table'"
+                  (click)="viewMode = 'table'"
+                  title="Table view">
+            <i class="fas fa-list"></i>
+          </button>
+          <button class="toggle-btn"
+                  [class.active]="viewMode === 'card'"
+                  (click)="viewMode = 'card'"
+                  title="Card view">
+            <i class="fas fa-id-card"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ═══ TABLE VIEW ════════════════════════════════════════ -->
+    <div class="table-card-body" *ngIf="viewMode === 'table'">
+      <div class="custom-table-scroll">
+        <table class="table table-hover professional-table">
+          <!-- TABLE HEAD -->
+          <thead>
+          <tr>
+            <th class="col-name">Visitor Name</th>
+            <th class="col-id">Visitor ID</th>
+            <th class="col-company">Company</th>
+            <th class="col-contact">Contact</th>
+            <th class="col-actions text-center">Actions</th>
+          </tr>
+          </thead>
+          <!-- TABLE BODY -->
+          <tbody>
+          <tr *ngFor="let v of paginatedVisitors">
+            <td class="col-name" title="{{ v.name }}">
+              <strong>{{ v.name }}</strong>
+            </td>
+            <td class="col-id" title="{{ v.uniqueId }}">{{ v.uniqueId }}</td>
+            <td class="col-company" title="{{ v.company }}">{{ v.company }}</td>
+            <td class="col-contact" title="{{ v.contactNumber }}">{{ v.contactNumber }}</td>
+            <td class="col-actions action-cell text-center">
+              <div class="action-wrap">
+                <button class="btn-action btn-edit"   (click)="openEdit(v)"         title="Edit Visitor">
+                  <i class="fas fa-edit"></i><span>Edit</span>
+                </button>
+                <button class="btn-action btn-visit"  (click)="openVisit(v)"        title="Add Visit">
+                  <i class="fas fa-user-plus"></i><span>Add Visit</span>
+                </button>
+                <button class="btn-action btn-view"   (click)="openViewVisits(v)"   title="View History">
+                  <i class="fas fa-history"></i><span>History</span>
+                </button>
+                <button class="btn-action btn-delete" (click)="openDeletePopup(v)"  title="Delete Visitor">
+                  <i class="fas fa-trash-alt"></i><span>Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <!-- EMPTY STATE -->
+          <tr *ngIf="!paginatedVisitors?.length">
+            <td colspan="5" class="text-center py-5">No visitors found</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- ═══ CARD VIEW ════════════════════════════════════════ -->
+    <div class="card-view-body" *ngIf="viewMode === 'card'">
+      <!-- Empty state -->
+      <div class="card-empty" *ngIf="!paginatedVisitors?.length">
+        <i class="fas fa-users-slash"></i>
+        <p>No visitors found</p>
+      </div>
+      <!-- Card grid -->
+      <div class="visitor-card-grid" *ngIf="paginatedVisitors?.length">
+        <app-visitor-card
+          *ngFor="let v of paginatedVisitors"
+          [visitor]="v"
+          (editVisitor)="openEdit($event)"
+          (addVisit)="openVisit($event)"
+          (deleteVisitor)="handleCardDelete($event)">
+        </app-visitor-card>
+      </div>
+    </div>
+    <!-- ═══ PAGINATION ════════════════════════════════════════ -->
+    <div class="pagination-wrapper">
+      <button class="glass-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+        <i class="fa fa-chevron-left"></i> Prev
+      </button>
+      <span class="fw-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="glass-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next <i class="fa fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+  <!-- =========================================
+       EDIT FORM
+  ========================================== -->
+  <app-visitor-edit-form
+    *ngIf="isEditOpen"
+    [visitor]="selectedVisitor"
+    (close)="closeEdit()"
+    (saved)="onSaved()">
+  </app-visitor-edit-form>
+  <!-- =========================================
+       VISITOR REGISTER FORM
+  ========================================== -->
+  <app-visitor-register-form
+    *ngIf="showVisit"
+    (close)="closeVisit()">
+  </app-visitor-register-form>
+  <!-- =========================================
+       VISIT HISTORY MODAL  (table view)
+  ========================================== -->
+  <div class="visit-history-overlay" *ngIf="showVisitHistory">
+    <div class="visit-history-dialog">
+      <!-- HEADER -->
+      <div class="visit-history-header">
+        <h5 class="mb-0">
+          Visit History — {{ visitHistoryTitle || 'Visitor' }}
+        </h5>
+      </div>
+      <!-- LOADING -->
+      <div *ngIf="visitHistoryLoading" class="alert alert-secondary py-2 mt-3 mx-3">
+        Loading visits...
+      </div>
+      <!-- ERROR -->
+      <div *ngIf="visitHistoryError" class="alert alert-danger py-2 mt-3 mx-3">
+        {{ visitHistoryError }}
+      </div>
+      <!-- TABLE -->
+      <div class="visit-history-table-wrap" *ngIf="!visitHistoryLoading && !visitHistoryError">
+        <div class="custom-table-scroll">
+          <table class="table table-hover professional-table">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Reason</th>
+              <th>Visit Time</th>
+              <th>Visit Date</th>
+              <th>Duration</th>
+              <th>Pass Expiry</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let visit of selectedVisitorVisits; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td title="{{ visit.reasonForVisit }}">{{ visit.reasonForVisit }}</td>
+              <td>{{ visit.expectedTime ? visit.expectedTime : '-' }}</td>
+              <td>{{ visit.visitDate   ? visit.visitDate   : '-' }}</td>
+              <td>{{ visit.passDuration }}</td>
+              <td>{{ visit.passExpiry  ? visit.passExpiry  : 'REJECTED' }}</td>
+              <td>
+                  <span [ngClass]="{
+                    pending:    visit.statusOnTime === 'PENDING',
+                    checkedIn:  visit.statusOnTime === 'CHECKED_IN',
+                    checkedOut: visit.statusOnTime === 'CHECKED_OUT',
+                    expired:    visit.statusOnTime === 'EXPIRED'
+                  }">{{ visit.statusOnTime }}</span>
+              </td>
+            </tr>
+            <tr *ngIf="!selectedVisitorVisits?.length">
+              <td colspan="7" class="text-center py-5">No visits found</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- FOOTER -->
+      <div class="visit-history-footer">
+        <button class="glass-btn" (click)="closeViewVisits()">Close</button>
+      </div>
+    </div>
+  </div>
+  <!-- =========================================
+       DELETE MODAL  (table view)
+  ========================================== -->
+  <div class="delete-overlay" *ngIf="showDeletePopup">
+    <div class="delete-modal">
+      <h3>Confirm Delete</h3>
+      <p>
+        Are you sure you want to delete
+        <strong id="modalDeleteName">{{ visitorToDelete?.name }}</strong> ?
+      </p>
+      <div class="delete-actions">
+        <button class="glass-btn" id="deleteModalCancel" (click)="cancelDelete()">Cancel</button>
+        <button class="action-btn delete" (click)="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

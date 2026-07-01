@@ -1,0 +1,78 @@
+<button class="mobile-toggle" (click)="isSidebarOpen = !isSidebarOpen">
+  <i class="fas fa-bars"></i>
+</button>
+<nav class="sidebar" [class.sidebar-open]="isSidebarOpen">
+  <div class="logo-section">
+    <a class="navbar-brand">Receptionist Panel</a>
+  </div>
+  <ul class="nav-menu">
+    <li class="nav-item" [class.active]="activeView === 'home'">
+      <a class="nav-link" (click)="navigateTo('home')">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+    </li>
+    <li class="nav-item" [class.active]="activeView === 'records'">
+      <a class="nav-link" (click)="navigateTo('records')">
+        <i class="fas fa-users"></i>
+        <span>Visitor Records</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="openFeedback()">
+        <i class="fas fa-comment-dots"></i>
+        <span>Feedback</span>
+      </a>
+    </li>
+  </ul>
+  <!-- Activity Log Section -->
+  <div class="activity-log-container">
+    <div class="section-header">
+      <i class="fas fa-history text-primary"></i>
+      <span>Recent Activity</span>
+    </div>
+    <div class="activity-log-list custom-scrollbar">
+      <div class="activity-loading" *ngIf="logsLoading && logs.length === 0">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span>Loading activities...</span>
+      </div>
+      <div class="activity-error" *ngIf="logsError && logs.length === 0">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{ logsError }}</span>
+      </div>
+      <ul class="activity-list" *ngIf="logs.length">
+        <li *ngFor="let log of logs | slice:0:10" class="activity-item">
+          <div class="activity-icon-small" [ngClass]="getLogStatusClass(log.action)">
+            <i class="fas" [ngClass]="getLogIcon(log.action)"></i>
+          </div>
+          <div class="activity-details">
+            <p class="activity-msg">{{ log.message }}</p>
+            <span class="activity-time-sub">{{ log.timestamp | date:'shortTime' }}</span>
+          </div>
+        </li>
+      </ul>
+      <div class="empty-state" *ngIf="!logsLoading && logs.length === 0 && !logsError">
+        <i class="fas fa-inbox"></i>
+        <p>No recent activity</p>
+      </div>
+    </div>
+  </div>
+  <!-- End Activity Log Section -->
+  <div class="sidebar-footer">
+    <ul class="footer-actions">
+      <li>
+        <button (click)="onLogout()" class="btn w-100 d-flex align-items-center justify-content-center">
+          <i class="fas fa-sign-out-alt me-2"></i>
+          Logout
+        </button>
+      </li>
+      <li>
+        <button class="btn w-100 d-flex align-items-center justify-content-center"
+                (click)="themeService.toggleTheme()">
+          <i class="fas me-2" [ngClass]="themeService.isDark ? 'fa-sun' : 'fa-moon'"></i>
+          {{ themeService.isDark ? 'Light Mode' : 'Dark Mode' }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

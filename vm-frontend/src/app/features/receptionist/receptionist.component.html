@@ -1,0 +1,69 @@
+<!--<app-reception-navbar (feedbackClick)="openFeedbackForm()"></app-reception-navbar>-->
+<!--<div class="container ">-->
+<!--  <div [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">-->
+<!--    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">-->
+<!--      <button class="action-btn" id="addButton" (click)="openForm()">-->
+<!--        <i class="fa fa-user-plus"></i>-->
+<!--        <span>Add Visitor</span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <app-visitor-records></app-visitor-records>-->
+<!--    <app-visitor-register-form (close)="closeForm()" *ngIf="showForm"></app-visitor-register-form>-->
+<!--    <app-feedback-form *ngIf="showFeedbackForm" (close)="closeFeedbackForm()"></app-feedback-form>-->
+<!--  </div>-->
+<!--</div>-->
+<div
+  class="layout-wrapper"
+  [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'"
+>
+
+  <app-reception-navbar (viewChange)="onViewChange($event)" (feedbackClick)="openFeedbackForm()"></app-reception-navbar>
+  <div class="page-content">
+    <div class="workspace-card">
+      <!-- =========================================
+           HOME VIEW
+      ========================================== -->
+      <ng-container *ngIf="activeView === 'home'">
+        <div class="welcome-view">
+          <div class="welcome-icon">
+            <i class="fas fa-hand-wave"></i>
+          </div>
+          <h1 class="welcome-title">Welcome, Receptionist!</h1>
+          <p class="welcome-subtitle">
+            Manage visitor check-ins, registrations, and visit records all in one place.
+            Use the sidebar to navigate to <strong>Visitor Records</strong>.
+          </p>
+          <div class="welcome-stats-hint">
+            <i class="fas fa-arrow-left"></i>
+            <span>Use the sidebar to get started</span>
+          </div>
+        </div>
+      </ng-container>
+<app-feedback-form *ngIf="showFeedbackForm" (close)="closeFeedbackForm()"></app-feedback-form>
+      <!-- =========================================
+           VISITOR RECORDS VIEW
+      ========================================== -->
+      <ng-container *ngIf="activeView === 'records'">
+        <!-- HEADER -->
+        <div class="workspace-header">
+          <button
+            class="action-btn"
+            id="addButton"
+            (click)="openForm()"
+          >
+            <i class="fa fa-user-plus"></i>
+            <span>Add Visitor</span>
+          </button>
+        </div>
+        <!-- TABLE -->
+        <app-visitor-records></app-visitor-records>
+        <!-- REGISTER FORM -->
+        <app-visitor-register-form
+          *ngIf="showForm"
+          (close)="closeForm()"
+        >
+        </app-visitor-register-form>
+      </ng-container>
+    </div>
+  </div>
+</div>

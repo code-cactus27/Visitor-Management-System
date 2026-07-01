@@ -1,0 +1,242 @@
+/*.export-page {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  min-height: 100%;*/
+/*  padding: 40px 20px;*/
+/*}*/
+/*.export-container {*/
+/*  width: 100%;*/
+/*  max-width: 400px;*/
+/*  !* Miniature *!*/
+/*  background: var(--bg-secondary);*/
+/*  backdrop-filter: var(--glass-blur);*/
+/*  border: 1px solid var(--border-color);*/
+/*  border-radius: 8px;*/
+/*  !* Sharper *!*/
+/*  padding: 24px;*/
+/*  !* Reduced *!*/
+/*  box-shadow: var(--shadow);*/
+/*  text-align: center;*/
+/*}*/
+/*.export-icon {*/
+/*  width: 48px;*/
+/*  !* Miniature *!*/
+/*  height: 48px;*/
+/*  background: rgba(59, 130, 246, 0.1);*/
+/*  color: #3b82f6;*/
+/*  border-radius: 8px;*/
+/*  !* Sharper *!*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  font-size: 20px;*/
+/*  !* Smaller *!*/
+/*  margin: 0 auto 16px;*/
+/*  !* Reduced *!*/
+/*}*/
+/*.export-container h3 {*/
+/*  font-size: 18px;*/
+/*  !* Smaller *!*/
+/*  font-weight: 800;*/
+/*  color: var(--text-primary);*/
+/*  margin-bottom: 8px;*/
+/*}*/
+/*.export-container p {*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  color: var(--text-secondary);*/
+/*  margin-bottom: 24px;*/
+/*}*/
+/*.form-group {*/
+/*  text-align: left;*/
+/*  margin-bottom: 24px;*/
+/*}*/
+/*.form-group label {*/
+/*  display: block;*/
+/*  font-size: 13px;*/
+/*  font-weight: 700;*/
+/*  color: var(--text-secondary);*/
+/*  margin-bottom: 8px;*/
+/*  text-transform: uppercase;*/
+/*  letter-spacing: 0.5px;*/
+/*}*/
+/*.form-control {*/
+/*  width: 100%;*/
+/*  padding: 8px 12px;*/
+/*  !* Reduced *!*/
+/*  background: rgba(0, 0, 0, 0.02);*/
+/*  border: 1px solid var(--border-color);*/
+/*  border-radius: 6px;*/
+/*  !* Sharper *!*/
+/*  color: var(--text-primary);*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  outline: none;*/
+/*  transition: all 0.2s ease;*/
+/*}*/
+/*.dark-mode .form-control {*/
+/*  background: rgba(255, 255, 255, 0.03);*/
+/*}*/
+/*.form-control:focus {*/
+/*  border-color: #3b82f6;*/
+/*  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);*/
+/*}*/
+/*.btn-export {*/
+/*  width: 100%;*/
+/*  padding: 10px;*/
+/*  !* Reduced *!*/
+/*  background: #3b82f6;*/
+/*  color: #fff;*/
+/*  border: none;*/
+/*  border-radius: 6px;*/
+/*  !* Sharper *!*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  font-weight: 600;*/
+/*  !* Adjusted *!*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  gap: 8px;*/
+/*  !* Tighter *!*/
+/*  cursor: pointer;*/
+/*  transition: all 0.2s ease;*/
+/*  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);*/
+/*}*/
+/*.btn-export:hover:not(:disabled) {*/
+/*  background: #2563eb;*/
+/*  transform: translateY(-2px);*/
+/*  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);*/
+/*}*/
+/*.btn-export:disabled {*/
+/*  opacity: 0.5;*/
+/*  cursor: not-allowed;*/
+/*  box-shadow: none;*/
+/*}*/
+/* =========================================
+   visitor-report-export.component.css
+   Bootstrap 5 Redesign — Admin Role
+========================================= */
+/* ─── PAGE WRAPPER ──────────────────────────────────────────── */
+.export-page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 20px;
+  min-height: 100%;
+  background: transparent;
+}
+/* ─── EXPORT CARD ───────────────────────────────────────────── */
+.export-container {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px 26px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  position: relative;
+}
+/* Blue top accent stripe */
+.export-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--warning);
+  border-radius: 12px 12px 0 0;
+}
+/* ─── ICON ──────────────────────────────────────────────────── */
+.export-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--warning-light);
+  color: var(--warning);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 16px;
+}
+/* ─── TITLE & DESCRIPTION ───────────────────────────────────── */
+.export-container h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.export-container > p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+/* ─── FORM FIELDS ───────────────────────────────────────────── */
+.form-group {
+  text-align: left;
+  margin-bottom: 14px;
+}
+.form-group label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+  /* remove old uppercase/tracking style for a cleaner feel */
+}
+.form-control {
+  width: 100%;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 7px !important;
+  padding: 8px 12px !important;
+  color: var(--text) !important;
+  font-size: 13px !important;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  outline: none;
+  box-shadow: none !important;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.form-control:focus {
+  border-color: var(--warning) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+/* ─── DOWNLOAD BUTTON ───────────────────────────────────────── */
+.btn-export {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--warning);
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.22);
+  margin-top: 4px;
+}
+.btn-export:hover:not(:disabled) {
+  background: var(--warning-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+.btn-export:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .export-container { padding: 24px 18px 20px; }
+}

@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand fixed-top app-topbar px-3"
+     [ngClass]="themeService.isDark ? 'navbar-dark bg-dark border-secondary' : 'navbar-light bg-white border-light-subtle'">
+  <div class="container-fluid gap-2">
+    <button *ngIf="showSidebar"
+            class="btn d-lg-none app-icon-button"
+            [ngClass]="themeService.isDark ? 'btn-outline-light' : 'btn-outline-dark'"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileSidebar"
+            aria-controls="mobileSidebar"
+            aria-label="Open navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <a class="navbar-brand fw-bold me-auto" routerLink="/">
+      Visitor Management
+    </a>
+    <span *ngIf="showSidebar" class="badge rounded-pill text-bg-primary d-none d-sm-inline-flex">
+      {{ roleTitle }}
+    </span>
+    <button class="btn app-theme-toggle"
+            [ngClass]="themeService.isDark ? 'btn-outline-light' : 'btn-outline-dark'"
+            type="button"
+            (click)="themeService.toggleTheme()">
+      <i class="fa-solid" [ngClass]="themeService.isDark ? 'fa-sun' : 'fa-moon'"></i>
+      <span class="d-none d-sm-inline ms-2">{{ themeService.isDark ? 'Light' : 'Dark' }}</span>
+    </button>
+  </div>
+</nav>
+<aside *ngIf="showSidebar"
+       class="app-sidebar d-none d-lg-flex"
+       [ngClass]="themeService.isDark ? 'bg-dark text-white border-secondary' : 'bg-white text-dark border-light-subtle'">
+  <ng-container *ngTemplateOutlet="sidebarContent"></ng-container>
+</aside>
+<div *ngIf="showSidebar"
+     class="offcanvas offcanvas-start app-mobile-sidebar"
+     tabindex="-1"
+     id="mobileSidebar"
+     aria-labelledby="mobileSidebarLabel"
+     [ngClass]="themeService.isDark ? 'bg-dark text-white' : 'bg-white text-dark'">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobileSidebarLabel">{{ roleTitle }}</h5>
+    <button type="button"
+            class="btn-close"
+            [ngClass]="themeService.isDark ? 'btn-close-white' : ''"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body pt-0">
+    <ng-container *ngTemplateOutlet="sidebarContent"></ng-container>
+  </div>
+</div>
+<ng-template #sidebarContent>
+  <div class="app-sidebar-header">
+    <div class="app-role-icon">
+      <i class="fa-solid fa-building-shield"></i>
+    </div>
+    <div>
+      <p class="app-sidebar-kicker mb-1">Workspace</p>
+      <h2 class="app-sidebar-title mb-0">{{ roleTitle }}</h2>
+    </div>
+  </div>
+  <ul class="nav nav-pills flex-column app-sidebar-nav">
+    <li class="nav-item" *ngFor="let item of navItems">
+      <a class="nav-link"
+         [routerLink]="item.route"
+         [fragment]="item.fragment"
+         [class.active]="isActive(item)"
+         [ngClass]="themeService.isDark ? 'text-white' : 'text-dark'">
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+</ng-template>

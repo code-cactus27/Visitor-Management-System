@@ -1,0 +1,62 @@
+
+
+
+
+<!--
+The overlay sits at z-index:99999 in app.component.html, above all content.
+pointer-events:all on the backdrop + pointer-events:none on nothing = everything
+                                                                      underneath is blocked — the page is completely frozen for non-security roles.
+                                                                      Security Officer gets a Dismiss button directly on the overlay.
+-->
+<div class="emergency-overlay" *ngIf="alert" [ngClass]="'overlay-' + alert.color">
+
+  <!-- Animated diagonal stripes -->
+  <div class="overlay-stripes"></div>
+
+  <!-- Alert box -->
+  <div class="alert-box" [ngClass]="'box-' + alert.color">
+
+    <!-- Flashing icon -->
+    <div class="alert-icon-ring">
+      <i class="fas" [ngClass]="alert.icon"></i>
+    </div>
+
+    <!-- Title -->
+    <h1 class="alert-title">{{ alert.title }}</h1>
+
+    <!-- Message -->
+    <p class="alert-message">{{ alert.message }}</p>
+
+    <!-- Time raised -->
+    <div class="alert-meta" *ngIf="alert.raisedAt">
+      <i class="fas fa-clock"></i>
+      Alert raised at {{ alert.raisedAt | date:'hh:mm:ss a' }}
+    </div>
+
+    <!--
+    SECURITY OFFICER — Dismiss button rendered directly on the overlay.
+    Works from any screen (admin, receptionist, security) because the
+                                                          overlay lives in app.component.html, not inside a role layout.
+    -->
+    <button
+      class="overlay-dismiss-btn"
+      *ngIf="isSecurity"
+      (click)="dismiss()">
+      <i class="fas fa-circle-xmark"></i>
+      Dismiss Emergency
+    </button>
+
+    <!-- ALL OTHER ROLES — informational notice, no dismiss capability -->
+    <div class="dismiss-notice" *ngIf="!isSecurity">
+      <i class="fas fa-shield-halved"></i>
+      This alert can only be dismissed by the Security Officer.
+      All operations are suspended until the alert is cleared.
+    </div>
+
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,47 @@
+<div [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+  <div class="container mt-5">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-dark text-white">
+        <h4 class="mb-0"> System Configuration</h4>
+      </div>
+      <div class="card-body">
+        <form  [formGroup]="form" (ngSubmit)="submit()">
+          <h5 class="text-primary mb-3">Gate Pass Settings</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Default Duration (hrs)</label>
+              <input type="number" min="2" class="form-control" formControlName="GATE_PASS_DEFAULT_DURATION">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Max Duration (hrs)</label>
+              <input type="number" min="2" class="form-control" formControlName="GATE_PASS_MAX_DURATION">
+            </div>
+          </div>
+          <hr>
+          <h5 class="text-primary mb-3">Email Settings</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Sender Email</label>
+              <input type="email" class="form-control"
+                     formControlName="EMAIL_SENDER">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Receiver Email</label>
+              <input type="email" class="form-control"
+                     formControlName="EMAIL_RECEIVER">
+            </div>
+          </div>
+          <div *ngIf="successMsg" class="alert alert-success">
+            {{ successMsg }}
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success px-4"
+                    [disabled]="form.invalid">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

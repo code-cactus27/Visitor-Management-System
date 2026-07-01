@@ -1,0 +1,625 @@
+/* =========================================
+   user-management.component.css
+   Admin Role — Bootstrap 5 + DM Sans
+========================================= */
+
+/* ─── PAGE WRAPPER ──────────────────────────────────────────── */
+
+.um-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ─── HEADER ────────────────────────────────────────────────── */
+
+.um-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.um-header h3 {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.um-header h3 i {
+  color: var(--warning);
+  font-size: 17px;
+}
+
+/* ─── ADD USER BUTTON ───────────────────────────────────────── */
+
+.btn-add-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: var(--warning);
+  color: #020202;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  white-space: nowrap;
+}
+
+.btn-add-user i { font-size: 14px; }
+
+.btn-add-user:hover {
+  background: var(--warning);
+  transform: translateY(-1px);
+  color: #0f0f0f;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+/* ─── ALERTS ────────────────────────────────────────────────── */
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  background: var(--success-light);
+  color: var(--success);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.alert-danger {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ─── TABLE CARD ────────────────────────────────────────────── */
+
+.table-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── SEARCH BAR ────────────────────────────────────────────── */
+
+.table-card-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.search-wrap {
+  position: relative;
+  max-width: 360px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-faint);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.search-wrap .form-control {
+  padding-left: 36px !important;
+  height: 36px;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 7px !important;
+  color: var(--text) !important;
+  font-size: 13px !important;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  outline: none;
+  box-shadow: none !important;
+  transition: border-color 0.14s ease;
+}
+
+.search-wrap .form-control:focus {
+  border-color: var(--warning) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+.search-wrap .form-control::placeholder { color: var(--text-faint) !important; }
+
+/* ─── TABLE SCROLL ──────────────────────────────────────────── */
+
+.custom-table-scroll { overflow-x: auto; }
+.custom-table-scroll::-webkit-scrollbar       { height: 4px; }
+.custom-table-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.custom-table-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ─── TABLE ─────────────────────────────────────────────────── */
+
+.professional-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+.professional-table thead th {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 18px;
+  white-space: nowrap;
+}
+
+.professional-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s ease;
+}
+
+.professional-table tbody tr:last-child { border-bottom: none; }
+
+.professional-table tbody tr:hover td { background: var(--hover-row) !important; }
+
+.professional-table tbody td {
+  padding: 12px 18px;
+  vertical-align: middle;
+  color: var(--text);
+  background: transparent;
+  font-size: 13px;
+}
+
+/* Disabled user row */
+.disabled-user-row td { opacity: 0.52; }
+
+/* ─── USER AVATAR CELL ──────────────────────────────────────── */
+
+.user-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--warning-light);
+  color: var(--warning);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.mono { font-family: 'DM Mono', monospace; font-size: 12.5px; }
+
+/* ─── ROLE BADGE ────────────────────────────────────────────── */
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.role-badge i { font-size: 10px; }
+
+.role-admin        { background: var(--warning-light); color: var(--warning); }
+.role-receptionist { background: var(--accent-light);  color: var(--accent);  }
+.role-security     { background: var(--success-light); color: var(--success); }
+
+/* ─── STATUS CHIP ───────────────────────────────────────────── */
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chip-active {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.chip-active .chip-dot {
+  background: var(--success);
+  box-shadow: 0 0 0 2px var(--success-light);
+}
+
+.chip-disabled {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+.chip-disabled .chip-dot {
+  background: var(--danger);
+}
+
+/* ─── TABLE ACTION BUTTONS ──────────────────────────────────── */
+
+.action-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 500;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  padding: 5px 11px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  white-space: nowrap;
+}
+
+.btn-action i { font-size: 11px; }
+
+.btn-action:hover:not(:disabled) { transform: translateY(-1px); }
+
+.btn-action:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Disable — amber */
+.btn-disable {
+  background: var(--warning-light);
+  color: var(--warning);
+  border-color: var(--warning);
+}
+
+.btn-disable:hover:not(:disabled) {
+  background: var(--warning);
+  color: #000000;
+}
+
+/* Enable — green */
+.btn-enable {
+  background: var(--success-light);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.btn-enable:hover:not(:disabled) {
+  background: var(--success);
+  color: #ffffff;
+}
+
+/* Delete — red */
+.btn-delete {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-delete:hover:not(:disabled) {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+/* ─── EMPTY STATE ───────────────────────────────────────────── */
+
+.empty-state-cell {
+  text-align: center;
+  padding: 48px 20px !important;
+  color: var(--text-faint);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty-state-cell i {
+  font-size: 28px;
+  opacity: 0.4;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ─── PAGINATION ────────────────────────────────────────────── */
+
+.pagination-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.btn-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.btn-nav:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--warning);
+  color: var(--warning);
+  transform: translateY(-1px);
+}
+
+.btn-nav:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.page-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ─── ADD USER MODAL ────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* warning top stripe */
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--warning);
+  border-radius: 14px 14px 0 0;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(12px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+.modal-box::-webkit-scrollbar       { width: 4px; }
+.modal-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Modal header */
+.modal-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.modal-title i { color: var(--warning); font-size: 15px; }
+
+.modal-close-btn {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; cursor: pointer; transition: all 0.14s ease;
+  flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+  background: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
+}
+
+/* Form inside modal */
+form {
+  padding: 18px 22px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-group label i { font-size: 11px; opacity: 0.8; }
+
+.form-group .form-control {
+  width: 100%;
+  background: var(--surface) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 9px 13px !important;
+  color: var(--text) !important;
+  font-size: 13.5px !important;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  outline: none;
+  box-shadow: none !important;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.form-group .form-control::placeholder { color: var(--text-faint) !important; }
+
+.form-group .form-control:focus {
+  border-color: var(--warning) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+
+select.form-control option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.field-error {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  color: var(--danger);
+  font-size: 11.5px;
+}
+
+.field-error i { font-size: 10px; }
+
+/* Modal footer buttons */
+.modal-footer-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn-modal-cancel {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.btn-modal-cancel:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+.btn-modal-save {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--warning);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.btn-modal-save:hover:not(:disabled) {
+  background: var(--warning);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.btn-modal-save:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .um-header      { flex-direction: column; align-items: flex-start; }
+  .btn-add-user   { width: 100%; justify-content: center; }
+  .search-wrap    { max-width: 100%; }
+  .modal-box      { max-width: 100%; border-radius: 14px; }
+  .modal-footer-row { flex-direction: column; }
+  .btn-modal-cancel,
+  .btn-modal-save { width: 100%; }
+  .pagination-wrapper { justify-content: center; }
+  .action-wrap    { justify-content: flex-start; }
+}

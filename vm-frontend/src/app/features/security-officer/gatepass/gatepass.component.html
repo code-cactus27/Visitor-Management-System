@@ -1,0 +1,372 @@
+<!--<div class="page-container" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">-->
+<!--  &lt;!&ndash; ══ LOADING ══════════════════════════════════════════════════════════ &ndash;&gt;-->
+<!--  <div *ngIf="loading" class="loading-state">-->
+<!--    <i class="fas fa-spinner fa-spin"></i>-->
+<!--    <p>Loading gate pass…</p>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; ══ ERROR ════════════════════════════════════════════════════════════ &ndash;&gt;-->
+<!--  <div *ngIf="error && !loading" class="error-state">-->
+<!--    <i class="fas fa-exclamation-triangle"></i>-->
+<!--    <p>{{ error }}</p>-->
+<!--    <button class="btn-secondary-action" routerLink="/security/dashboard">-->
+<!--      <i class="fas fa-arrow-left"></i> Back to Dashboard-->
+<!--    </button>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; ══ GATE PASS CARD ═══════════════════════════════════════════════════ &ndash;&gt;-->
+<!--  <div class="standard-gate-pass" *ngIf="gatePassData && !loading">-->
+<!--    &lt;!&ndash; ── PASS HEADER (colour changes per status) ───────────────────── &ndash;&gt;-->
+<!--    &lt;!&ndash;-->
+<!--      header-checked_in  → blue  (approved)-->
+<!--      header-expired     → red   (rejected / expired)-->
+<!--      header-checked_out → gray  (checked out)-->
+<!--      header-pending     → amber (pending)-->
+<!--    &ndash;&gt;-->
+<!--    <div class="pass-header" [ngClass]="'header-' + gatePassData.status.toLowerCase()">-->
+<!--      <div class="company-brand">-->
+<!--        <i class="fas fa-building"></i>-->
+<!--        <span>INFOSYS LIMITED</span>-->
+<!--      </div>-->
+<!--      <div class="pass-status-chip">-->
+<!--        <i class="fas" [ngClass]="iconClass"></i>-->
+<!--        {{ statusLabel }}-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; ── MAIN CONTENT ──────────────────────────────────────────────── &ndash;&gt;-->
+<!--    <div class="pass-content">-->
+<!--      &lt;!&ndash; Visitor name + Pass / Visit IDs &ndash;&gt;-->
+<!--      <div class="info-row top-row">-->
+<!--        <div class="visitor-box">-->
+<!--          <label>Visitor Name</label>-->
+<!--          <div class="value-extra-large">{{ gatePassData.name }}</div>-->
+<!--          <div class="sub-value">{{ gatePassData.company || 'Private' }}</div>-->
+<!--        </div>-->
+<!--        <div class="id-box">-->
+<!--          <label>Pass ID</label>-->
+<!--          <div class="id-value">#{{ gatePassData.uniqueId }}</div>-->
+<!--          <div class="visit-id-value">Visit #{{ gatePassData.visitId }}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <hr class="divider">-->
+<!--      &lt;!&ndash; Visit details &ndash;&gt;-->
+<!--      <div class="details-section">-->
+<!--        <div class="detail-row">-->
+<!--          <div class="detail-item">-->
+<!--            <label>Purpose of Visit</label>-->
+<!--            <p>{{ gatePassData.reasonForVisit }}</p>-->
+<!--          </div>-->
+<!--          <div class="detail-item">-->
+<!--            <label>Phone Number</label>-->
+<!--            <p class="value-phone">{{ gatePassData.contactNumber }}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="detail-row">-->
+<!--          <div class="detail-item">-->
+<!--            <label>Email Address</label>-->
+<!--            <p>{{ gatePassData.email }}</p>-->
+<!--          </div>-->
+<!--          <div class="detail-item">-->
+<!--            <label>Registered On</label>-->
+<!--            <p>{{ gatePassData.createdAt | date: 'dd MMM yyyy, hh:mm a' }}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="detail-item full-width" *ngIf="gatePassData.notes">-->
+<!--          <label>Additional Notes</label>-->
+<!--          <p>{{ gatePassData.notes }}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <hr class="divider">-->
+<!--      &lt;!&ndash; Timing grid — adapts per status &ndash;&gt;-->
+<!--      <div class="timing-grid">-->
+<!--        &lt;!&ndash; Visit Date (always shown) &ndash;&gt;-->
+<!--        <div class="time-box">-->
+<!--          <label>Visit Date</label>-->
+<!--          <p>{{ gatePassData.visitDate | date: 'dd MMM yyyy' }}</p>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Entry Time &ndash;&gt;-->
+<!--        <div class="time-box">-->
+<!--          <label>Entry Time</label>-->
+<!--          &lt;!&ndash; CHECKED_IN: actual entry time &ndash;&gt;-->
+<!--          <p *ngIf="gatePassData.status === 'CHECKED_IN'">-->
+<!--            {{ gatePassData.entryTime | date: 'hh:mm a' }}-->
+<!--          </p>-->
+<!--          &lt;!&ndash; CHECKED_OUT: actual entry time &ndash;&gt;-->
+<!--          <p *ngIf="gatePassData.status === 'CHECKED_OUT'">-->
+<!--            {{ gatePassData.entryTime | date: 'hh:mm a' }}-->
+<!--          </p>-->
+<!--          &lt;!&ndash; EXPIRED: rejected, no entry &ndash;&gt;-->
+<!--          <p *ngIf="gatePassData.status === 'EXPIRED'" class="text-danger">-->
+<!--            —-->
+<!--          </p>-->
+<!--          &lt;!&ndash; PENDING: expected time &ndash;&gt;-->
+<!--          <p *ngIf="gatePassData.status === 'PENDING'">-->
+<!--            {{ gatePassData.expectedTime | date: 'hh:mm a' }}-->
+<!--            <span class="tag-expected">(expected)</span>-->
+<!--          </p>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Third column — changes label + value per status &ndash;&gt;-->
+<!--        <div class="time-box"-->
+<!--             [ngClass]="{-->
+<!--               'expiry':   gatePassData.status === 'CHECKED_IN',-->
+<!--               'exit':     gatePassData.status === 'CHECKED_OUT',-->
+<!--               'rejected': gatePassData.status === 'EXPIRED'-->
+<!--             }">-->
+<!--          &lt;!&ndash; CHECKED_IN: Valid Until (pass expiry) &ndash;&gt;-->
+<!--          <ng-container *ngIf="gatePassData.status === 'CHECKED_IN'">-->
+<!--            <label>Valid Until</label>-->
+<!--            <p>{{ gatePassData.passExpiry | date: 'hh:mm a' }}</p>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; CHECKED_OUT: Exit Time &ndash;&gt;-->
+<!--          <ng-container *ngIf="gatePassData.status === 'CHECKED_OUT'">-->
+<!--            <label>Exit Time</label>-->
+<!--            <p>{{ gatePassData.exitTime | date: 'hh:mm a' }}</p>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; EXPIRED: Rejected &ndash;&gt;-->
+<!--          <ng-container *ngIf="gatePassData.status === 'EXPIRED'">-->
+<!--            <label>Status</label>-->
+<!--            <p class="text-danger">Rejected</p>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; PENDING: Expected expiry &ndash;&gt;-->
+<!--          <ng-container *ngIf="gatePassData.status === 'PENDING'">-->
+<!--            <label>Expected Expiry</label>-->
+<!--            <p>{{ gatePassData.passExpiry | date: 'hh:mm a' }}</p>-->
+<!--          </ng-container>-->
+<!--        </div>-->
+<!--      </div>&lt;!&ndash; /.timing-grid &ndash;&gt;-->
+<!--    </div>&lt;!&ndash; /.pass-content &ndash;&gt;-->
+<!--    &lt;!&ndash; ── FOOTER / STAMP ────────────────────────────────────────────── &ndash;&gt;-->
+<!--    <div class="pass-footer">-->
+<!--      &lt;!&ndash; Signature area + stamp overlay &ndash;&gt;-->
+<!--      <div class="signature-section">-->
+<!--        <div class="status-stamp-overlay" *ngIf="statusImage">-->
+<!--          <img [src]="statusImage" [alt]="statusLabel + ' stamp'">-->
+<!--        </div>-->
+<!--        <div class="signature-line">-->
+<!--          <span>Security Officer Signature</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; Status badge + duration pill &ndash;&gt;-->
+<!--      <div class="auth-section">-->
+<!--        <div class="status-stamp-text" [ngClass]="statusClass">-->
+<!--          <i class="fas" [ngClass]="iconClass"></i>-->
+<!--          {{ statusLabel }}-->
+<!--        </div>-->
+<!--        <div class="duration-pill" *ngIf="gatePassData.passDuration">-->
+<!--          <i class="fas fa-clock"></i>-->
+<!--          {{ gatePassData.passDuration }}h pass-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>&lt;!&ndash; /.pass-footer &ndash;&gt;-->
+<!--  </div>&lt;!&ndash; /.standard-gate-pass &ndash;&gt;-->
+<!--  &lt;!&ndash; ══ ACTION BUTTONS ════════════════════════════════════════════════ &ndash;&gt;-->
+<!--  <div class="actions" *ngIf="gatePassData && !loading">-->
+<!--    <button class="btn-primary-action" (click)="printPass()">-->
+<!--      <i class="fas fa-print"></i> Print Pass-->
+<!--    </button>-->
+<!--    <button class="btn-secondary-action" routerLink="/security/dashboard">-->
+<!--      <i class="fas fa-arrow-left"></i> Dashboard-->
+<!--    </button>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="page-container" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+
+  <!-- ══ LOADING ═══════════════════════════════════════════════ -->
+  <div *ngIf="loading" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i>
+    <p>Loading gate pass…</p>
+  </div>
+
+  <!-- ══ ERROR ══════════════════════════════════════════════════ -->
+  <div *ngIf="error && !loading" class="error-state">
+    <i class="fas fa-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+    <a class="btn-secondary-action" routerLink="/security/dashboard">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <!-- ══ GATE PASS CARD ═════════════════════════════════════════ -->
+  <div class="standard-gate-pass" *ngIf="gatePassData && !loading">
+
+    <!-- ── HEADER — colour driven by status ──────────────────── -->
+    <div class="pass-header"
+         [ngClass]="'header-' + gatePassData.status.toLowerCase()">
+
+      <div class="company-brand">
+        <i class="fas fa-building"></i>
+        <span>INFOSYS LIMITED</span>
+      </div>
+
+      <!-- Status chip in top-right of header -->
+      <div class="pass-status-chip">
+        <i class="fas" [ngClass]="iconClass"></i>
+        {{ statusLabel }}
+      </div>
+    </div>
+
+    <!-- ── PASS BODY ──────────────────────────────────────────── -->
+    <div class="pass-content">
+
+      <!-- Visitor name + IDs -->
+      <div class="info-row">
+        <div class="visitor-box">
+          <label>Visitor Name</label>
+          <div class="value-extra-large">{{ gatePassData.name }}</div>
+          <div class="sub-value">{{ gatePassData.company || 'Private' }}</div>
+        </div>
+        <div class="id-box">
+          <label>Visitor ID</label>
+          <div class="id-value">#{{ gatePassData.uniqueId }}</div>
+          <div class="visit-id-value">Visit #{{ gatePassData.visitId }}</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Contact + visit details -->
+      <div class="details-section">
+
+        <div class="detail-row">
+          <div class="detail-item">
+            <label>Purpose of Visit</label>
+            <p>{{ gatePassData.reasonForVisit }}</p>
+          </div>
+          <div class="detail-item">
+            <label>Phone Number</label>
+            <p class="value-phone">{{ gatePassData.contactNumber }}</p>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-item">
+            <label>Email Address</label>
+            <p>{{ gatePassData.email }}</p>
+          </div>
+          <div class="detail-item">
+            <label>Registered On</label>
+            <p>{{ gatePassData.createdAt | date:'dd MMM yyyy, hh:mm a' }}</p>
+          </div>
+        </div>
+
+        <div class="detail-item full-width" *ngIf="gatePassData.notes">
+          <label>Additional Notes</label>
+          <p>{{ gatePassData.notes }}</p>
+        </div>
+
+      </div>
+
+      <hr class="divider">
+
+      <!-- ── TIMING GRID — 3 cells, adapts per status ────────── -->
+      <div class="timing-grid">
+
+        <!-- Cell 1: Visit Date (always) -->
+        <div class="time-box">
+          <label>Visit Date</label>
+          <p>{{ gatePassData.visitDate | date:'dd MMM yyyy' }}</p>
+        </div>
+
+        <!-- Cell 2: Entry Time -->
+        <div class="time-box">
+          <label>Entry Time</label>
+
+          <!-- CHECKED_IN → actual entry time -->
+          <p *ngIf="gatePassData.status === 'CHECKED_IN'">
+            {{ gatePassData.entryTime | date:'hh:mm a' }}
+          </p>
+
+          <!-- CHECKED_OUT → actual entry time -->
+          <p *ngIf="gatePassData.status === 'CHECKED_OUT'">
+            {{ gatePassData.entryTime | date:'hh:mm a' }}
+          </p>
+
+          <!-- EXPIRED → no entry, show dash -->
+          <p *ngIf="gatePassData.status === 'EXPIRED'" class="text-danger">
+            <i class="fas fa-times-circle"></i> &nbsp;Not admitted
+          </p>
+
+          <!-- PENDING → expected time (plain "HH:mm:ss" — needs helper) -->
+          <p *ngIf="gatePassData.status === 'PENDING'">
+            {{ toTimeString(gatePassData.expectedTime) | date:'hh:mm a' }}
+            <span class="tag-expected">(expected)</span>
+          </p>
+        </div>
+
+        <!-- Cell 3: varies by status -->
+        <div class="time-box"
+             [ngClass]="{
+               expiry:   gatePassData.status === 'CHECKED_IN',
+               exit:     gatePassData.status === 'CHECKED_OUT',
+               rejected: gatePassData.status === 'EXPIRED'
+             }">
+
+          <!-- CHECKED_IN → Valid Until -->
+          <ng-container *ngIf="gatePassData.status === 'CHECKED_IN'">
+            <label>Valid Until</label>
+            <p>{{ gatePassData.passExpiry | date:'hh:mm a' }}</p>
+          </ng-container>
+
+          <!-- CHECKED_OUT → Exit Time -->
+          <ng-container *ngIf="gatePassData.status === 'CHECKED_OUT'">
+            <label>Exit Time</label>
+            <p>{{ gatePassData.exitTime | date:'hh:mm a' }}</p>
+          </ng-container>
+
+          <!-- EXPIRED → Rejected -->
+          <ng-container *ngIf="gatePassData.status === 'EXPIRED'">
+            <label>Status</label>
+            <p class="text-danger">
+              <i class="fas fa-ban"></i> &nbsp;Rejected
+            </p>
+          </ng-container>
+
+          <!-- PENDING → Expected Expiry -->
+          <ng-container *ngIf="gatePassData.status === 'PENDING'">
+            <label>Expected Expiry</label>
+            <p>{{ gatePassData.passExpiry | date:'hh:mm a' }}</p>
+          </ng-container>
+
+        </div>
+      </div><!-- /.timing-grid -->
+
+    </div><!-- /.pass-content -->
+
+    <!-- ── FOOTER — stamp + signature ─────────────────────────── -->
+    <div class="pass-footer">
+
+      <!-- Left: stamp image + signature line -->
+      <div class="signature-section">
+        <div class="status-stamp-overlay" *ngIf="statusImage">
+          <img [src]="statusImage" [alt]="statusLabel">
+        </div>
+        <div class="signature-line">
+          <span>Security Officer Signature</span>
+        </div>
+      </div>
+
+      <!-- Right: status badge + duration pill -->
+      <div class="auth-section">
+        <div class="status-stamp-text" [ngClass]="statusClass">
+          <i class="fas" [ngClass]="iconClass"></i>
+          {{ statusLabel }}
+        </div>
+        <div class="duration-pill" *ngIf="gatePassData.passDuration">
+          <i class="fas fa-hourglass-half"></i>
+          {{ gatePassData.passDuration }}h pass
+        </div>
+      </div>
+
+    </div><!-- /.pass-footer -->
+
+  </div><!-- /.standard-gate-pass -->
+
+  <!-- ══ ACTION BUTTONS ════════════════════════════════════════ -->
+  <div class="actions" *ngIf="gatePassData && !loading">
+    <button class="btn-primary-action" (click)="printPass()">
+      <i class="fas fa-print"></i> Print Pass
+    </button>
+    <a class="btn-secondary-action" routerLink="/security/visitors">
+      <i class="fas fa-arrow-left"></i> Visit Record
+    </a>
+  </div>
+
+</div>

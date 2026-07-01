@@ -1,0 +1,204 @@
+<!--<div class="visitor-card" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">-->
+<!--  <div class="table-card-header">-->
+<!--    <div class="table-filters-navbar">-->
+<!--      <div class="filter-group search-group">-->
+<!--        <div class="search-input-wrapper">-->
+<!--          <i class="fas fa-search search-icon"></i>-->
+<!--          <input type="text" class="form-control" placeholder="Search by Visitor name or ID..." [(ngModel)]="searchText"-->
+<!--            (ngModelChange)="onSearch()" />-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="custom-table-scroll">-->
+<!--    <table class="table table-hover professional-table">-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th class="col-name">Visitor Name</th>-->
+<!--          <th class="col-uid">Unique ID</th>-->
+<!--          <th class="col-company">Company</th>-->
+<!--          <th class="col-purpose">Purpose</th>-->
+<!--          <th class="col-date">Visit Date</th>-->
+<!--          <th class="col-time">Expected Time</th>-->
+<!--          <th class="col-status">Status</th>-->
+<!--          <th class="col-action text-center">Actions</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <tr *ngFor="let visit of paginatedVisits">-->
+<!--          <td class="col-name" title="{{ visit.visitorName }}">{{ visit.visitorName }}</td>-->
+<!--          <td class="col-uid" title="{{ visit.uniqueId }}">{{ visit.uniqueId }}</td>-->
+<!--          <td class="col-company" title="{{ visit.company }}">{{ visit.company }}</td>-->
+<!--          <td class="col-purpose" title="{{ visit.reasonForVisit }}">{{ visit.reasonForVisit }}</td>-->
+<!--          <td class="col-date">{{ visit.visitDate | date }}</td>-->
+<!--          <td class="col-time">{{ ('1970-01-01T' + visit.expectedTime) | date:'hh:mm a' }}</td>-->
+<!--          <td class="col-status">-->
+<!--            <span [ngClass]="{-->
+<!--              pending:    visit.statusOnTime === 'PENDING',-->
+<!--              checkedIn:  visit.statusOnTime === 'CHECKED_IN',-->
+<!--              checkedOut: visit.statusOnTime === 'CHECKED_OUT',-->
+<!--              expired:    visit.statusOnTime === 'EXPIRED'-->
+<!--            }">{{ visit.statusOnTime }}</span>-->
+<!--          </td>-->
+<!--          <td class="col-action text-center">-->
+<!--            <div class="action-wrap">-->
+<!--              <button class="btn-action btn-approve" *ngIf="visit.statusOnTime === 'PENDING'"-->
+<!--                (click)="approveVisitor(visit)">-->
+<!--                <i class="fas fa-check"></i> Approve-->
+<!--              </button>-->
+<!--              <button class="btn-action btn-reject" *ngIf="visit.statusOnTime === 'PENDING'"-->
+<!--                (click)="rejectVisitor(visit.visitId)">-->
+<!--                <i class="fas fa-times"></i> Reject-->
+<!--              </button>-->
+<!--              <button class="btn-action btn-pass"-->
+<!--                *ngIf="['CHECKED_IN', 'CHECKED_OUT', 'EXPIRED'].includes(visit.statusOnTime)"-->
+<!--                [routerLink]="['/security/gatepass', visit.uniqueId]">-->
+<!--                <i class="fas fa-id-card"></i> Gate Pass-->
+<!--              </button>-->
+<!--              <button class="btn-action btn-checkout" *ngIf="visit.statusOnTime === 'CHECKED_IN'"-->
+<!--                (click)="checkOutVisitor(visit.visitId)">-->
+<!--                <i class="fas fa-sign-out-alt"></i> Check-Out-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        <tr *ngIf="!paginatedVisits.length">-->
+<!--          <td colspan="8" class="text-center py-5">No visit records found</td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--  <div class="pagination-wrapper">-->
+<!--    <button id="nextPrevButtons" class="btn-nav" (click)="prevPage()" [disabled]="currentPage === 1">-->
+<!--      <i class="fas fa-chevron-left"></i> Prev-->
+<!--    </button>-->
+<!--    <span class="pagination-text">Page {{ currentPage }} of {{ totalPages }}</span>-->
+<!--    <button id="nextPrevButtons" class="btn-nav" (click)="nextPage()"  [disabled]="currentPage === totalPages">-->
+<!--      Next <i class="fas fa-chevron-right"></i>-->
+<!--    </button>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="visitor-card" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+
+  <!-- ── SEARCH HEADER ──────────────────────────────────────── -->
+  <div class="table-card-header">
+    <div class="table-filters-navbar">
+      <div class="filter-group search-group">
+        <div class="search-input-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Search by Visitor name or ID..."
+                 [(ngModel)]="searchText"
+                 (ngModelChange)="onSearch()" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TABLE ──────────────────────────────────────────────── -->
+  <div class="custom-table-scroll">
+    <table class="table table-hover professional-table">
+      <thead>
+      <tr>
+        <th class="col-name">Visitor Name</th>
+        <th class="col-uid">Unique ID</th>
+        <th class="col-company">Company</th>
+        <th class="col-purpose">Purpose</th>
+        <th class="col-date">Visit Date</th>
+        <th class="col-time">Expected Time</th>
+        <th class="col-status">Status</th>
+        <th class="col-action text-center">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let visit of paginatedVisits">
+
+        <td class="col-name"    title="{{ visit.visitorName }}">{{ visit.visitorName }}</td>
+        <td class="col-uid"     title="{{ visit.uniqueId }}">{{ visit.uniqueId }}</td>
+        <td class="col-company" title="{{ visit.company }}">{{ visit.company }}</td>
+        <td class="col-purpose" title="{{ visit.reasonForVisit }}">{{ visit.reasonForVisit }}</td>
+        <td class="col-date">{{ visit.visitDate | date }}</td>
+
+        <!-- expectedTime arrives as "HH:mm:ss" — prefix a dummy date for the pipe -->
+        <td class="col-time">
+          {{ ('1970-01-01T' + visit.expectedTime) | date:'hh:mm a' }}
+        </td>
+
+        <!-- Status badge -->
+        <td class="col-status">
+            <span [ngClass]="{
+              pending:    visit.statusOnTime === 'PENDING',
+              checkedIn:  visit.statusOnTime === 'CHECKED_IN',
+              checkedOut: visit.statusOnTime === 'CHECKED_OUT',
+              expired:    visit.statusOnTime === 'EXPIRED'
+            }">{{ visit.statusOnTime }}</span>
+        </td>
+
+        <!-- Actions -->
+        <td class="col-action text-center">
+          <div class="action-wrap">
+
+            <!-- PENDING → Approve / Reject -->
+            <button class="btn-action btn-approve"
+                    *ngIf="visit.statusOnTime === 'PENDING'"
+                    (click)="approveVisitor(visit)">
+              <i class="fas fa-check"></i> Approve
+            </button>
+
+            <button class="btn-action btn-reject"
+                    *ngIf="visit.statusOnTime === 'PENDING'"
+                    (click)="rejectVisitor(visit.visitId)">
+              <i class="fas fa-times"></i> Reject
+            </button>
+
+            <!--
+              Gate Pass button — visible for CHECKED_IN / CHECKED_OUT / EXPIRED.
+              Route: /security/gatepass/:visitorId/visit/:visitId
+              visit.visitorId  → PK of the Visitor row  (from VisitResponseDTO)
+              visit.visitId    → PK of the VisitRecord row
+            -->
+            <button class="btn-action btn-pass"
+                    *ngIf="['CHECKED_IN', 'CHECKED_OUT', 'EXPIRED'].includes(visit.statusOnTime)"
+                    [routerLink]="['/security/gatepass', visit.visitorId, 'visit', visit.visitId]">
+              <i class="fas fa-id-card"></i> Gate Pass
+            </button>
+
+            <!-- CHECKED_IN → Check-Out -->
+            <button class="btn-action btn-checkout"
+                    *ngIf="visit.statusOnTime === 'CHECKED_IN'"
+                    (click)="checkOutVisitor(visit.visitId)">
+              <i class="fas fa-sign-out-alt"></i> Check-Out
+            </button>
+
+          </div>
+        </td>
+      </tr>
+
+      <!-- Empty state -->
+      <tr *ngIf="!paginatedVisits.length">
+        <td colspan="8" class="text-center py-5">
+          <i class="fas fa-inbox" style="font-size:22px;opacity:.4;display:block;margin-bottom:8px"></i>
+          No visit records found
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── PAGINATION ─────────────────────────────────────────── -->
+  <div class="pagination-wrapper">
+    <button class="btn-nav"
+            (click)="prevPage()"
+            [disabled]="currentPage === 1">
+      <i class="fas fa-chevron-left"></i> Prev
+    </button>
+    <span class="pagination-text">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="btn-nav"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages">
+      Next <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+</div>

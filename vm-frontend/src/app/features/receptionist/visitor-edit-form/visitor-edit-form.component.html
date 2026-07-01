@@ -1,0 +1,67 @@
+<div class="modal-backdrop">
+  <div class="modal-box">
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h5 class="mb-0" [ngClass]="themeService.isDark ? 'text-light' : 'text-dark'">
+        Edit Visitor
+      </h5>
+    </div>
+    <!-- BODY -->
+    <div class="modal-body">
+      <form [formGroup]="visitorForm" id="editForm" (ngSubmit)="submitForm()">
+        <!-- NAME -->
+        <div class="form-group">
+          <input class="form-control" placeholder="Name" formControlName="name" />
+          <div class="text-danger validation-text" *ngIf="visitorForm.controls['name'].invalid && visitorForm.controls['name'].touched">
+            Name is required
+          </div>
+        </div>
+        <!-- UNIQUE ID -->
+        <div class="form-group">
+          <input class="form-control" placeholder="Unique ID" formControlName="uniqueId" readonly />
+        </div>
+        <!-- COMPANY -->
+        <div class="form-group">
+          <input class="form-control" placeholder="Company" formControlName="company" />
+          <div class="text-danger validation-text" *ngIf="visitorForm.controls['company'].invalid && visitorForm.controls['company'].touched">
+            Company is required
+          </div>
+        </div>
+        <!-- PHONE -->
+        <div class="form-group">
+          <input class="form-control" placeholder="Phone" formControlName="contactNumber" />
+          <div class="text-danger validation-text" *ngIf="visitorForm.controls['contactNumber'].invalid && visitorForm.controls['contactNumber'].touched">
+            Enter valid 10-digit number
+          </div>
+        </div>
+        <!-- EMAIL -->
+        <div class="form-group">
+          <input class="form-control" placeholder="Email" formControlName="email" />
+          <div class="text-danger validation-text" *ngIf="visitorForm.controls['email'].invalid && visitorForm.controls['email'].touched">
+            Enter valid email
+          </div>
+        </div>
+        <!-- NOTES -->
+        <div class="form-group">
+          <input class="form-control" placeholder="Notes" formControlName="notes" />
+        </div>
+        <!-- ALERTS -->
+        <div *ngIf="successMessage" class="alert alert-success py-2">
+          {{ successMessage }}
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger py-2">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+    <!-- FOOTER -->
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" (click)="handleEditClosed()" [disabled]="loading">
+        Cancel
+      </button>
+      <button class="btn btn-success" type="submit" form="editForm" [disabled]="loading || visitorForm.invalid">
+        {{ loading ? 'Updating...' : 'Update' }}
+      </button>
+    </div>
+  </div>
+</div>

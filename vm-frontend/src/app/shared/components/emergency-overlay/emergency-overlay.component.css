@@ -1,0 +1,244 @@
+
+
+
+
+/* =========================================
+   emergency-overlay.component.css
+   Full-screen freeze — all roles
+   Dismiss button — Security Officer only
+========================================= */
+
+/* ─── OVERLAY BACKDROP ──────────────────────────────────────── */
+
+.emergency-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;          /* above everything — sidebars, modals, drawers */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+  animation: overlayAppear 0.35s ease;
+
+  /*
+    pointer-events: all — the overlay captures ALL mouse/touch events.
+    Nothing underneath is clickable → the entire app is frozen.
+    Only the Dismiss button inside .alert-box is interactive.
+  */
+  pointer-events: all;
+}
+
+@keyframes overlayAppear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Per-type backdrop colours */
+.overlay-red    { background: rgba(127, 29,  29,  0.97); }
+.overlay-orange { background: rgba(124, 45,  18,  0.97); }
+.overlay-blue   { background: rgba(23,  37,  84,  0.97); }
+.overlay-amber  { background: rgba(120, 53,  15,  0.97); }
+.overlay-purple { background: rgba(59,  7,   100, 0.97); }
+
+/* ─── DIAGONAL STRIPE ANIMATION ─────────────────────────────── */
+
+.overlay-stripes {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(255, 255, 255, 0.03) 40px,
+    rgba(255, 255, 255, 0.03) 80px
+  );
+  animation: stripeScroll 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes stripeScroll {
+  0%   { background-position: 0 0; }
+  100% { background-position: 113px 113px; }
+}
+
+/* ─── ALERT BOX ─────────────────────────────────────────────── */
+
+.alert-box {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 660px;
+  border-radius: 22px;
+  padding: 44px 40px 36px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
+  animation: boxPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes boxPop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* Per-type box backgrounds */
+.box-red    { background: rgba(153, 27,  27,  0.78); }
+.box-orange { background: rgba(154, 52,  18,  0.78); }
+.box-blue   { background: rgba(29,  78,  216, 0.78); }
+.box-amber  { background: rgba(161, 98,  7,   0.78); }
+.box-purple { background: rgba(109, 40,  217, 0.78); }
+
+/* ─── ICON ──────────────────────────────────────────────────── */
+
+.alert-icon-ring {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: iconFlash 1s ease-in-out infinite alternate;
+}
+
+.alert-icon-ring i { font-size: 44px; color: #ffffff; }
+
+@keyframes iconFlash {
+  from { box-shadow: 0 0 0 0   rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2); }
+  to   { box-shadow: 0 0 0 20px rgba(255,255,255,0),  0 0 40px rgba(255,255,255,0.3); }
+}
+
+/* ─── TEXT ──────────────────────────────────────────────────── */
+
+.alert-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  animation: titleFlash 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes titleFlash {
+  from { opacity: 1;    }
+  to   { opacity: 0.72; }
+}
+
+.alert-message {
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 22px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── META (time raised) ────────────────────────────────────── */
+
+.alert-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 16px;
+  border-radius: 99px;
+  margin-bottom: 24px;
+  font-family: 'DM Mono', monospace;
+}
+
+.alert-meta i { font-size: 12px; }
+
+/* ─── SECURITY OFFICER DISMISS BUTTON ──────────────────────── */
+
+.overlay-dismiss-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 36px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+  /* Make sure the button is always on top and interactive */
+  position: relative;
+  z-index: 2;
+}
+
+.overlay-dismiss-btn i { font-size: 18px; }
+
+.overlay-dismiss-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.overlay-dismiss-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ─── OTHER ROLES — dismiss notice ─────────────────────────── */
+
+.dismiss-notice {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 18px;
+  margin-top: 10px;
+  max-width: 440px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.dismiss-notice i {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.45);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .alert-box            { padding: 30px 20px 26px; border-radius: 16px; }
+  .alert-title          { font-size: 26px; }
+  .alert-message        { font-size: 15px; }
+  .alert-icon-ring      { width: 76px; height: 76px; }
+  .alert-icon-ring i    { font-size: 32px; }
+  .overlay-dismiss-btn  { padding: 12px 24px; font-size: 14px; }
+}
+
+
+
+
+
+
+
+
+
+

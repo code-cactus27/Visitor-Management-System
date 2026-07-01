@@ -1,0 +1,273 @@
+/*.layout-wrapper {*/
+/*  height: 100vh;*/
+/*  width: 100%;*/
+/*  display: flex;*/
+/*  background: transparent;*/
+/*  transition: all 0.3s ease;*/
+/*  padding: 16px;*/
+/*  !* Reduced gap *!*/
+/*  gap: 16px;*/
+/*  !* Reduced gap *!*/
+/*  overflow: hidden;*/
+/*}*/
+/*.page-content {*/
+/*  flex: 1;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  min-width: 0;*/
+/*  height: 100%;*/
+/*}*/
+/*.workspace-card {*/
+/*  flex: 1;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  padding: 24px;*/
+/*  !* Reduced padding *!*/
+/*  border-radius: 8px;*/
+/*  !* Sharper *!*/
+/*  background: var(--bg-secondary);*/
+/*  backdrop-filter: var(--glass-blur);*/
+/*  -webkit-backdrop-filter: var(--glass-blur);*/
+/*  border: 1px solid var(--border-color);*/
+/*  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);*/
+/*  !* Softer shadow *!*/
+/*  position: relative;*/
+/*  overflow: hidden;*/
+/*}*/
+/*.workspace-card::before {*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  height: 2px;*/
+/*  !* Thinner *!*/
+/*  background: linear-gradient(90deg, #111111, #444444, #888888);*/
+/*  z-index: 1;*/
+/*}*/
+/*!* Custom Scrollbar *!*/
+/*.workspace-card *::-webkit-scrollbar {*/
+/*  width: 6px;*/
+/*  height: 6px;*/
+/*}*/
+/*.workspace-card *::-webkit-scrollbar-track {*/
+/*  background: transparent;*/
+/*}*/
+/*.workspace-card *::-webkit-scrollbar-thumb {*/
+/*  background: rgba(128, 128, 128, 0.2);*/
+/*  border-radius: 6px;*/
+/*}*/
+/*.workspace-card *::-webkit-scrollbar-thumb:hover {*/
+/*  background: rgba(128, 128, 128, 0.4);*/
+/*}*/
+/*!* =========================================*/
+/*   WELCOME HOME VIEW*/
+/*========================================= *!*/
+/*.welcome-view {*/
+/*  flex: 1;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  text-align: center;*/
+/*  gap: 20px;*/
+/*  padding: 40px 20px;*/
+/*}*/
+/*.welcome-icon {*/
+/*  width: 96px;*/
+/*  height: 96px;*/
+/*  border-radius: 28px;*/
+/*  background: linear-gradient(135deg, #111111, #444444);*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  font-size: 42px;*/
+/*  color: #ffffff;*/
+/*  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);*/
+/*  animation: floatIcon 3s ease-in-out infinite;*/
+/*}*/
+/*@keyframes floatIcon {*/
+/*  0%,*/
+/*  100% {*/
+/*    transform: translateY(0);*/
+/*  }*/
+/*  50% {*/
+/*    transform: translateY(-10px);*/
+/*  }*/
+/*}*/
+/*.welcome-title {*/
+/*  font-size: 36px;*/
+/*  font-weight: 800;*/
+/*  color: var(--text-primary);*/
+/*  letter-spacing: -1px;*/
+/*}*/
+/*.welcome-subtitle {*/
+/*  font-size: 16px;*/
+/*  color: var(--text-secondary);*/
+/*  max-width: 480px;*/
+/*  line-height: 1.7;*/
+/*}*/
+/*.welcome-stats-hint {*/
+/*  display: inline-flex;*/
+/*  align-items: center;*/
+/*  gap: 10px;*/
+/*  padding: 12px 24px;*/
+/*  border-radius: 100px;*/
+/*  border: 1px solid var(--border-color);*/
+/*  color: var(--text-secondary);*/
+/*  font-size: 14px;*/
+/*  font-weight: 500;*/
+/*  backdrop-filter: blur(12px);*/
+/*  background: var(--hover-bg);*/
+/*  animation: pulse 2.5s ease-in-out infinite;*/
+/*}*/
+/*@keyframes pulse {*/
+/*  0%,*/
+/*  100% {*/
+/*    opacity: 1;*/
+/*  }*/
+/*  50% {*/
+/*    opacity: 0.6;*/
+/*  }*/
+/*}*/
+/*!* =========================================*/
+/*   RESPONSIVE*/
+/*========================================= *!*/
+/*@media(max-width: 992px) {*/
+/*  .layout-wrapper {*/
+/*    padding: 0;*/
+/*  }*/
+/*  .page-content {*/
+/*    padding: 100px 24px 24px;*/
+/*  }*/
+/*  .workspace-card {*/
+/*    padding: 24px;*/
+/*    height: 100%;*/
+/*  }*/
+/*}*/
+/*@media(max-width: 768px) {*/
+/*  .page-content {*/
+/*    padding: 90px 16px 16px;*/
+/*  }*/
+/*  .workspace-card {*/
+/*    padding: 20px;*/
+/*    border-radius: 20px;*/
+/*  }*/
+/*  .welcome-title {*/
+/*    font-size: 28px;*/
+/*  }*/
+/*}*/
+/* =========================================
+   security-officer.component.css
+   Bootstrap 5 Redesign — Security Role
+========================================= */
+/* ─── LAYOUT SHELL ─────────────────────────────────────────── */
+.layout-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  background: var(--bg);
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+/* ─── PAGE CONTENT (right panel) ───────────────────────────── */
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  background: var(--bg);
+  margin-left: 280px;
+  transition: margin-left 0.25s ease;
+  overflow-y: auto;
+}
+/* ─── WORKSPACE CARD ────────────────────────────────────────── */
+.workspace-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 32px;
+  background: var(--bg);
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  overflow: hidden;
+}
+/* inner scrollbar */
+.workspace-card *::-webkit-scrollbar        { width: 4px; height: 4px; }
+.workspace-card *::-webkit-scrollbar-track  { background: transparent; }
+.workspace-card *::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 4px; }
+.workspace-card *::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+/* ─── WELCOME / HOME VIEW ───────────────────────────────────── */
+.welcome-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+  padding: 60px 20px;
+}
+.welcome-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: var(--accent);
+  animation: floatIcon 3s ease-in-out infinite;
+}
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-6px); }
+}
+.welcome-title {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+.welcome-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 440px;
+  line-height: 1.7;
+  margin: 0;
+}
+.welcome-stats-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--surface);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.55; }
+}
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .page-content {
+    margin-left: 0;
+    padding-top: 58px;
+    overflow-y: auto;
+  }
+  .workspace-card { padding: 20px; }
+}
+@media (max-width: 768px) {
+  .workspace-card  { padding: 16px; }
+  .welcome-title   { font-size: 20px; }
+  .welcome-subtitle{ font-size: 13.5px; }
+}

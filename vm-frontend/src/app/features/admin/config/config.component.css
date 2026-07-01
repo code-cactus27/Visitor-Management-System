@@ -1,0 +1,256 @@
+/*.light-mode .card {*/
+/*  background: #ffffff;*/
+/*  border-radius: 8px;*/
+/*  !* Miniature *!*/
+/*  transition: 0.3s;*/
+/*}*/
+/*.light-mode .card-header {*/
+/*  background: white !important;*/
+/*  border-top-left-radius: 8px;*/
+/*  border-top-right-radius: 8px;*/
+/*}*/
+/*.light-mode .form-control {*/
+/*  border: 1px solid #ced4da;*/
+/*  border-radius: 6px;*/
+/*  !* Sharper *!*/
+/*  padding: 8px 12px;*/
+/*  !* Reduced *!*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  transition: 0.3s;*/
+/*}*/
+/*.light-mode .form-control:focus {*/
+/*  border-color: #0d6efd;*/
+/*  box-shadow: 0 0 8px rgba(13, 110, 253, 0.25);*/
+/*}*/
+/*.light-mode label {*/
+/*  color: #212529;*/
+/*}*/
+/*.light-mode h5 {*/
+/*  font-weight: 600;*/
+/*}*/
+/*.light-mode hr {*/
+/*  border-top: 1px solid #d6d6d6;*/
+/*}*/
+/*.light-mode .btn-success {*/
+/*  border-radius: 6px;*/
+/*  !* Miniature *!*/
+/*  font-weight: 600;*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  padding: 8px 16px;*/
+/*  !* Reduced *!*/
+/*}*/
+/*.light-mode .alert-success {*/
+/*  border-radius: 8px;*/
+/*  !* Miniature *!*/
+/*  margin-top: 12px;*/
+/*  !* Reduced *!*/
+/*  padding: 12px;*/
+/*  font-size: 13px;*/
+/*}*/
+/*.dark-mode .card {*/
+/*  background: #1e1e1e;*/
+/*  border-radius: 8px;*/
+/*  !* Miniature *!*/
+/*  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);*/
+/*  !* Softer *!*/
+/*  transition: 0.3s;*/
+/*}*/
+/*.dark-mode .card-header {*/
+/*  background: linear-gradient(90deg, #000000, #343a40) !important;*/
+/*  border-top-left-radius: 8px;*/
+/*  !* Miniature *!*/
+/*  border-top-right-radius: 8px;*/
+/*  !* Miniature *!*/
+/*}*/
+/*.dark-mode .card-body {*/
+/*  color: #f1f1f1;*/
+/*}*/
+/*.dark-mode label {*/
+/*  color: #f8f9fa;*/
+/*}*/
+/*.dark-mode h5 {*/
+/*  color: #4da3ff;*/
+/*  font-weight: 600;*/
+/*}*/
+/*.dark-mode .form-control {*/
+/*  background: #2a2a2a;*/
+/*  border: 1px solid #444;*/
+/*  color: #ffffff;*/
+/*  border-radius: 6px;*/
+/*  !* Miniature *!*/
+/*  padding: 8px 12px;*/
+/*  !* Reduced *!*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  transition: 0.3s;*/
+/*}*/
+/*.dark-mode .form-control::placeholder {*/
+/*  color: #bdbdbd;*/
+/*}*/
+/*.dark-mode .form-control:focus {*/
+/*  background: #2f2f2f;*/
+/*  border-color: #4da3ff;*/
+/*  box-shadow: 0 0 10px rgba(77, 163, 255, 0.4);*/
+/*  color: white;*/
+/*}*/
+/*.dark-mode hr {*/
+/*  border-top: 1px solid #444;*/
+/*}*/
+/*.dark-mode .btn-success {*/
+/*  border-radius: 6px;*/
+/*  !* Miniature *!*/
+/*  font-weight: 600;*/
+/*  font-size: 13px;*/
+/*  !* Smaller *!*/
+/*  padding: 8px 16px;*/
+/*  !* Reduced *!*/
+/*}*/
+/*.dark-mode .btn-success:hover {*/
+/*  transform: translateY(-1px);*/
+/*}*/
+/*.dark-mode .alert-success {*/
+/*  border-radius: 8px;*/
+/*  !* Miniature *!*/
+/*  margin-top: 12px;*/
+/*  !* Reduced *!*/
+/*  padding: 12px;*/
+/*  font-size: 13px;*/
+/*  background: #1d472d;*/
+/*  color: #b7ffcb;*/
+/*  border: 1px solid #2d8a4e;*/
+/*}*/
+/*.card {*/
+/*  overflow: hidden;*/
+/*}*/
+/*.form-label {*/
+/*  margin-bottom: 8px;*/
+/*}*/
+/*.text-end {*/
+/*  margin-top: 20px;*/
+/*}*/
+/*button {*/
+/*  transition: 0.3s ease;*/
+/*}*/
+/*button:hover {*/
+/*  opacity: 0.95;*/
+/*}*/
+/* =========================================
+   config.component.css
+   Bootstrap 5 Redesign — Admin Role
+========================================= */
+/* ─── PAGE WRAPPER ──────────────────────────────────────────── */
+/* The template uses Bootstrap .container + .card directly.
+   We only need targeted overrides — styles.css handles the
+   global .card, .card-header, .card-body, .form-control,
+   .btn-success, and .alert-success tokens already. */
+/* ─── CARD ──────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px !important;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.card-header {
+  background: var(--surface-2) !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 14px 20px !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+.card-header h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+.card-body {
+  padding: 24px 20px !important;
+}
+/* ─── SECTION HEADINGS ──────────────────────────────────────── */
+h5.text-primary,
+.card-body h5 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--warning) !important;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+/* ─── FORM ──────────────────────────────────────────────────── */
+.form-label {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+  display: block;
+}
+.form-control {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 7px !important;
+  padding: 8px 12px !important;
+  color: var(--text) !important;
+  font-size: 13px !important;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  outline: none;
+  box-shadow: none !important;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+.form-control:focus {
+  border-color: var(--warning) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+.form-control::placeholder { color: var(--text-faint) !important; }
+/* ─── DIVIDER ───────────────────────────────────────────────── */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 18px 0;
+}
+/* ─── SAVE BUTTON ───────────────────────────────────────────── */
+.btn-success {
+  background: var(--warning) !important;
+  border-color: var(--warning) !important;
+  color: #000000 !important;
+  border-radius: 7px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 8px 20px !important;
+  transition: all 0.14s ease;
+}
+.btn-success:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.btn-success:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+/* ─── SUCCESS ALERT ─────────────────────────────────────────── */
+.alert-success {
+  background: var(--success-light) !important;
+  color: var(--success) !important;
+  border: 1px solid rgba(52, 211, 153, 0.3) !important;
+  border-radius: 7px !important;
+  padding: 10px 14px !important;
+  font-size: 13px !important;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* ─── TEXT END (submit row) ─────────────────────────────────── */
+.text-end {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+/* ─── BUTTON GENERAL RESET ──────────────────────────────────── */
+/* Remove old blanket `button { transition: 0.3s; opacity .95; }` */
+button {
+  transition: all 0.14s ease;
+}

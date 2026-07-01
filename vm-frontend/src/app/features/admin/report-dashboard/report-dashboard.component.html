@@ -1,0 +1,58 @@
+<div class="report-dashboard-page" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+  <!-- Header -->
+  <div class="header">
+    <h2>
+      <i class="fas fa-chart-bar"></i>
+      Analytics Dashboard
+    </h2>
+  </div>
+  <!-- Filters -->
+  <div class="filters-bar">
+    <select class="filter-select" [(ngModel)]="selectedType" (change)="onTypeChange()">
+      <option value="" disabled selected>-- Report Type --</option>
+      <option value="daily">Daily View</option>
+      <option value="weekly">Weekly View</option>
+      <option value="monthly">Monthly View</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="selectedRange" (change)="onFilterChange()">
+      <option value="" disabled selected>-- Time Range --</option>
+      <option *ngFor="let r of rangeOptions" [value]="r.value">
+        {{ r.label }}
+      </option>
+    </select>
+  </div>
+  <!-- Chart Area -->
+  <div class="chart-container">
+    <div class="chart-grid">
+      <div class="grid-line" style="top: 0%"></div>
+      <div class="grid-line" style="top: 25%"></div>
+      <div class="grid-line" style="top: 50%"></div>
+      <div class="grid-line" style="top: 75%"></div>
+      <div class="grid-line" style="top: 100%"></div>
+    </div>
+    <div class="chart-view">
+      <div class="bar-wrapper" *ngFor="let item of trendData; let idx = index">
+        <div class="bar-value">{{ item.count }}</div>
+        <div class="bar-fill-container">
+          <div
+            class="bar-fill"
+            [style.height.%]="(item.count / (maxValue || 1)) * 100"
+            [attr.title]="item.label + ': ' + item.count"
+          ></div>
+        </div>
+        <div class="bar-label">{{ item.label }}</div>
+      </div>
+    </div>
+  </div>
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="summary-card">
+      <h3>Total Visitors</h3>
+      <p>{{ totalVisitors | number }}</p>
+    </div>
+    <div class="summary-card">
+      <h3>Avg. Visit Time</h3>
+      <p>{{ avgDuration }}</p>
+    </div>
+  </div>
+</div>

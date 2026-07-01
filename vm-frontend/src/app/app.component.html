@@ -1,0 +1,6 @@
+<app-notification-center></app-notification-center>
+
+<div *ngIf="!isCheckingAuth">
+  <router-outlet></router-outlet>
+</div>
+<app-emergency-overlay></app-emergency-overlay>

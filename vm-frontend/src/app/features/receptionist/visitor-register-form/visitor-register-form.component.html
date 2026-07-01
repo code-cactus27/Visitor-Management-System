@@ -1,0 +1,115 @@
+<div class="modal-backdrop">
+  <div class="modal-box">
+    <!-- TITLE -->
+    <div class="modal-header">
+      <h5 class="mb-0">
+        {{ isExistingVisitMode ? 'Add Visit (Existing Visitor)' : 'Register Visitor + Add Visit' }}
+      </h5>
+    </div>
+    <!-- SUCCESS STATE -->
+    <div *ngIf="showSuccessOnly" class="modal-body">
+      <div class="alert alert-success py-2">
+        {{ successMessage }}
+      </div>
+    </div>
+    <div *ngIf="showSuccessOnly" class="modal-footer">
+      <button class="btn btn-danger" type="button" (click)="closeForm()">
+        Close
+      </button>
+    </div>
+    <!-- FORM -->
+    <ng-container *ngIf="!showSuccessOnly">
+      <div class="modal-body">
+        <form [formGroup]="visitorForm" id="registerForm" (ngSubmit)="submitForm()">
+          <!-- NAME -->
+          <div class="form-group">
+            <input class="form-control" placeholder="Name" formControlName="name" />
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['name'].invalid && (visitorForm.controls['name'].dirty || visitorForm.controls['name'].touched)">
+              Enter a valid name (Example: John Doe).
+            </div>
+          </div>
+          <!-- COMPANY -->
+          <div class="form-group">
+            <input class="form-control" placeholder="Company" formControlName="company" />
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['company'].invalid && (visitorForm.controls['company'].dirty || visitorForm.controls['company'].touched)">
+              Company is required.
+            </div>
+          </div>
+          <!-- CONTACT -->
+          <div class="form-group">
+            <input class="form-control" placeholder="Contact Number" formControlName="contactNumber" />
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['contactNumber'].invalid && (visitorForm.controls['contactNumber'].dirty || visitorForm.controls['contactNumber'].touched)">
+              Enter a valid 10-digit number starting with 6-9.
+            </div>
+          </div>
+          <!-- EMAIL -->
+          <div class="form-group">
+            <input class="form-control" placeholder="Email" formControlName="email" />
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['email'].invalid && (visitorForm.controls['email'].dirty || visitorForm.controls['email'].touched)">
+              Enter a valid email.
+            </div>
+          </div>
+          <!-- NOTES -->
+          <div class="form-group">
+            <input class="form-control" placeholder="Notes (optional)" formControlName="notes" />
+          </div>
+          <!-- REASON -->
+          <div class="form-group">
+            <select class="form-control" formControlName="reasonForVisit">
+              <option value="">Select reason for visit</option>
+              <option *ngFor="let r of reasonOptions" [value]="r">{{ r }}</option>
+            </select>
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['reasonForVisit'].invalid && (visitorForm.controls['reasonForVisit'].dirty || visitorForm.controls['reasonForVisit'].touched)">
+              Reason is required.
+            </div>
+          </div>
+          <!-- DURATION -->
+          <div class="form-group">
+            <select class="form-control" formControlName="passDuration">
+              <option [ngValue]="null">Select duration (hrs)</option>
+              <option *ngFor="let d of durationOptions" [ngValue]="d">{{ d }} Hours</option>
+            </select>
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['passDuration'].invalid && (visitorForm.controls['passDuration'].dirty || visitorForm.controls['passDuration'].touched)">
+              Duration is required.
+            </div>
+          </div>
+          <!-- DATE -->
+          <div class="form-group">
+            <input class="form-control" type="date" formControlName="visitDate" />
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['visitDate'].errors?.['pastDate'] && (visitorForm.controls['visitDate'].dirty || visitorForm.controls['visitDate'].touched)">
+              Visit date cannot be in the past.
+            </div>
+          </div>
+          <!-- TIME -->
+          <div class="form-group">
+            <input class="form-control" type="time" formControlName="expectedTime" />
+            <div class="text-danger validation-text"
+              *ngIf="visitorForm.controls['expectedTime'].errors?.['pastTime'] && (visitorForm.controls['expectedTime'].dirty || visitorForm.controls['expectedTime'].touched)">
+              Expected time must be in the future for today’s date.
+            </div>
+          </div>
+          <!-- ERROR -->
+          <div *ngIf="errorMessage" class="alert alert-danger py-2">
+            {{ errorMessage }}
+          </div>
+        </form>
+      </div>
+      <!-- ACTIONS / FOOTER -->
+      <div class="modal-footer">
+        <button class="btn btn-danger" type="button" (click)="closeForm()" [disabled]="loading">
+          Cancel
+        </button>
+        <button class="btn btn-success" type="submit" form="registerForm" [disabled]="loading || visitorForm.invalid">
+          {{ loading ? 'Submitting...' : (isExistingVisitMode ? 'Add Visit' : 'Register') }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>

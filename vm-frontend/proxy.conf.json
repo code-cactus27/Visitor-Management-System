@@ -1,0 +1,14 @@
+{
+   "/api":{
+    "target":"http://localhost:8765",
+    "secure":false,
+     "changeOrgin":true,
+     "logLevel":"debug"
+   },
+  "/gate": {
+    "target": "http://localhost:8765",
+    "secure": false,
+    "changingOrigin": true,
+    "loglevel": "debug"
+  }
+}

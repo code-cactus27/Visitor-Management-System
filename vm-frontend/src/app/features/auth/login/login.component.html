@@ -1,0 +1,828 @@
+<!--&lt;!&ndash;<div class="login-container">&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <div class="container login-card">&ndash;&gt;-->
+<!--&lt;!&ndash;    <p *ngIf="errorMessage" [style.color]="'red'">{{errorMessage}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div id="legend">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="login-header">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h2>Welcome Back</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>Login to your account</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;        <label>Email: </label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="input-wrapper">&ndash;&gt;-->
+<!--&lt;!&ndash;          <i class="fa fa-envelope icon-left"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input type="email" formControlName="email" class="form-control" placeholder="Enter your Email Id">&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="error" *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].dirty ">&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="text-danger" *ngIf="loginForm.controls['email'].errors!['required']">Email is required</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="text-danger" *ngIf="loginForm.controls['email'].errors!['email']">Provide correct&ndash;&gt;-->
+<!--&lt;!&ndash;            credentials</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;        <label>Password: </label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="input-wrapper">&ndash;&gt;-->
+<!--&lt;!&ndash;          <i class="fa fa-lock icon-left"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;          <input type="password" formControlName="password" class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;                 placeholder="Enter your password">&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="error"&ndash;&gt;-->
+<!--&lt;!&ndash;             *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty ">&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="text-danger" *ngIf="loginForm.controls['password'].errors!['required']">Password is&ndash;&gt;-->
+<!--&lt;!&ndash;            required</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="text-danger" *ngIf="loginForm.controls['password'].errors!['minlength']">Password should&ndash;&gt;-->
+<!--&lt;!&ndash;            be of minimum 6 characters</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="text-danger" *ngIf="loginForm.controls['password'].errors!['pattern']">Invalid password&ndash;&gt;-->
+<!--&lt;!&ndash;          </p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="forgot-password">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a routerLink="/forgot-password">Forgot Password?</a>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <button id="btn-login" class="btn btn-primary" [disabled]="loginForm.invalid">&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="!isLoading">Login</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        <span *ngIf="isLoading">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="spinner"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;      </button>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    </form>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<div class="rules-section">&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="rules-card dos-card">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2><i class="fas fa-check-circle"></i> Do’s</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <ul>&ndash;&gt;-->
+<!--&lt;!&ndash;      <li *ngFor="let item of dosList">&ndash;&gt;-->
+<!--&lt;!&ndash;        {{ item }}&ndash;&gt;-->
+<!--&lt;!&ndash;      </li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="rules-card donts-card">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2><i class="fas fa-times-circle"></i> Don’ts</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;    <ul>&ndash;&gt;-->
+<!--&lt;!&ndash;      <li *ngFor="let item of dontsList">&ndash;&gt;-->
+<!--&lt;!&ndash;        {{ item }}&ndash;&gt;-->
+<!--&lt;!&ndash;      </li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<div class="places-container">&ndash;&gt;-->
+<!--&lt;!&ndash;  <h1 class="places-title">Places To Visit Inside Infosys Mysore</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="place-card">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="place-image">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="flip-card">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="flip-card-inner">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="flip-card-front">&ndash;&gt;-->
+<!--&lt;!&ndash;            <img src="assets/gec1.jpeg" alt="GEC 1">&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="flip-card-back">&ndash;&gt;-->
+<!--&lt;!&ndash;            <img src="assets/gec2.jpg" alt="GEC 2">&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="place-info">&ndash;&gt;-->
+<!--&lt;!&ndash;      <h2>Global Education Center (GEC)</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>&ndash;&gt;-->
+<!--&lt;!&ndash;        The Global Education Center is the heart of Infosys Mysore Campus,&ndash;&gt;-->
+<!--&lt;!&ndash;        known for its grand architecture, world-class training facilities,&ndash;&gt;-->
+<!--&lt;!&ndash;        and beautiful surroundings. It is one of the most iconic and&ndash;&gt;-->
+<!--&lt;!&ndash;        frequently visited places inside the campus.&ndash;&gt;-->
+<!--&lt;!&ndash;      </p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="place-card">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="place-image">&ndash;&gt;-->
+<!--&lt;!&ndash;      <img src="assets/multiplex.jpg" alt="Multiplex">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="place-info">&ndash;&gt;-->
+<!--&lt;!&ndash;      <h2>Multiplex</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>&ndash;&gt;-->
+<!--&lt;!&ndash;        The Infosys Multiplex provides a great entertainment experience&ndash;&gt;-->
+<!--&lt;!&ndash;        for trainees and employees with movie screenings, events, and&ndash;&gt;-->
+<!--&lt;!&ndash;        relaxing recreational activities after working hours.&ndash;&gt;-->
+<!--&lt;!&ndash;      </p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <div class="place-card">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="place-image">&ndash;&gt;-->
+<!--&lt;!&ndash;      <img src="assets/recreation.jpeg" alt="Recreation Center">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="place-info">&ndash;&gt;-->
+<!--&lt;!&ndash;      <h2>Recreation Center</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>&ndash;&gt;-->
+<!--&lt;!&ndash;        The Recreation Center is a perfect place to relax and refresh,&ndash;&gt;-->
+<!--&lt;!&ndash;        offering facilities like swimming pool, indoor games, gym,&ndash;&gt;-->
+<!--&lt;!&ndash;        and other wellness activities for visitors and employees.&ndash;&gt;-->
+<!--&lt;!&ndash;      </p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;<div class="feedback-section">&ndash;&gt;-->
+<!--&lt;!&ndash;  <h2 class="feedback-heading">Visitor Feedbacks</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="feedback-slider">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="feedback-track">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="feedback-card" *ngFor="let feedback of feedbacks">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card-top">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h4>{{feedback.visitorName}}</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span>&ndash;&gt;-->
+<!--&lt;!&ndash; {{ feedback.createdAt | date:'MMM d, y' }}&ndash;&gt;-->
+<!--&lt;!&ndash;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="stars">&ndash;&gt;-->
+<!--&lt;!&ndash;          <i *ngFor="let star of [1,2,3,4,5]" class="fa-star"&ndash;&gt;-->
+<!--&lt;!&ndash;             [ngClass]="feedback.rating >= star ? 'fas active-star' : 'far'">&ndash;&gt;-->
+
+<!--&lt;!&ndash;          </i>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p class="feedback-text">&ndash;&gt;-->
+<!--&lt;!&ndash;          {{feedback.feedbackText}}&ndash;&gt;-->
+<!--&lt;!&ndash;        </p>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;      <div class="feedback-card" *ngFor="let feedback of feedbacks">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card-top">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h4>{{feedback.visitorName}}</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span>&ndash;&gt;-->
+<!--&lt;!&ndash; {{ feedback.createdAt | date:'MMM d, y' }}&ndash;&gt;-->
+<!--&lt;!&ndash;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="stars">&ndash;&gt;-->
+<!--&lt;!&ndash;          <i *ngFor="let star of [1,2,3,4,5]" class="fa-star"&ndash;&gt;-->
+<!--&lt;!&ndash;             [ngClass]="feedback.rating >= star ? 'fas active-star' : 'far'">&ndash;&gt;-->
+<!--&lt;!&ndash;          </i>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p class="feedback-text">&ndash;&gt;-->
+<!--&lt;!&ndash;          {{feedback.feedbackText}}&ndash;&gt;-->
+<!--&lt;!&ndash;        </p>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+
+<!--&lt;!&ndash;<footer class="landing-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="footer-content">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="footer-left">&ndash;&gt;-->
+<!--&lt;!&ndash;      <h3><i class="fas fa-map-marker-alt footer-icon"></i> Infosys Mysore Address</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>&ndash;&gt;-->
+<!--&lt;!&ndash;        No. 350, Hebbal Electronics City,<br>&ndash;&gt;-->
+<!--&lt;!&ndash;        Hootagalli, Mysuru, Karnataka 570027&ndash;&gt;-->
+<!--&lt;!&ndash;      </p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="footer-right">&ndash;&gt;-->
+<!--&lt;!&ndash;      <h3><i class="fas fa-phone-alt footer-icon"></i> Call at Office</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;      <p>Infosys Mysore</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      <h4>0821 240 4101</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;      <span>Mon - Fri, 8:00 - 22:00</span>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</footer>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash; ══ LOGIN HERO ══════════════════════════════════════════════ &ndash;&gt;-->
+<!--<div class="login-container">-->
+<!--  <div class="login-card">-->
+
+<!--    &lt;!&ndash; Header &ndash;&gt;-->
+<!--    <div class="login-header">-->
+<!--      <div class="logo-icon">-->
+<!--        <i class="fas fa-shield-alt"></i>-->
+<!--      </div>-->
+<!--      <h2>Welcome Back</h2>-->
+<!--      <p>Sign in to Visitor Management System</p>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Server error alert &ndash;&gt;-->
+<!--    <div class="login-error-alert" *ngIf="errorMessage">-->
+<!--      <i class="fas fa-exclamation-circle"></i>-->
+<!--      <span>{{ errorMessage }}</span>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Form &ndash;&gt;-->
+<!--    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">-->
+
+<!--      &lt;!&ndash; Email &ndash;&gt;-->
+<!--      <div class="form-group">-->
+<!--        <label>-->
+<!--          <i class="fas fa-envelope" style="margin-right:6px;opacity:.7"></i>-->
+<!--          Email-->
+<!--        </label>-->
+<!--        <div class="input-wrapper">-->
+<!--          <input type="email"-->
+<!--                 formControlName="email"-->
+<!--                 class="form-control"-->
+<!--                 placeholder="Enter your email address">-->
+<!--        </div>-->
+<!--        <div class="error"-->
+<!--             *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].dirty">-->
+<!--          <p class="text-danger"-->
+<!--             *ngIf="loginForm.controls['email'].errors!['required']">-->
+<!--            <i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>-->
+<!--            Email is required-->
+<!--          </p>-->
+<!--          <p class="text-danger"-->
+<!--             *ngIf="loginForm.controls['email'].errors!['email']">-->
+<!--            <i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>-->
+<!--            Please enter a valid email-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Password &ndash;&gt;-->
+<!--      <div class="form-group">-->
+<!--        <label>-->
+<!--          <i class="fas fa-lock" style="margin-right:6px;opacity:.7"></i>-->
+<!--          Password-->
+<!--        </label>-->
+<!--        <div class="input-wrapper">-->
+<!--          <input type="password"-->
+<!--                 formControlName="password"-->
+<!--                 class="form-control"-->
+<!--                 placeholder="Enter your password">-->
+<!--        </div>-->
+<!--        <div class="error"-->
+<!--             *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty">-->
+<!--          <p class="text-danger"-->
+<!--             *ngIf="loginForm.controls['password'].errors!['required']">-->
+<!--            <i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>-->
+<!--            Password is required-->
+<!--          </p>-->
+<!--          <p class="text-danger"-->
+<!--             *ngIf="loginForm.controls['password'].errors!['minlength']">-->
+<!--            <i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>-->
+<!--            Minimum 6 characters required-->
+<!--          </p>-->
+<!--          <p class="text-danger"-->
+<!--             *ngIf="loginForm.controls['password'].errors!['pattern']">-->
+<!--            <i class="fas fa-exclamation-triangle" style="margin-right:4px"></i>-->
+<!--            Invalid password format-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Forgot password &ndash;&gt;-->
+<!--      <div class="forgot-password">-->
+<!--        <a routerLink="/forgot-password">-->
+<!--          <i class="fas fa-question-circle" style="margin-right:4px"></i>-->
+<!--          Forgot Password?-->
+<!--        </a>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Submit &ndash;&gt;-->
+<!--      <button id="btn-login"-->
+<!--              class="btn btn-primary"-->
+<!--              [disabled]="loginForm.invalid">-->
+<!--        <ng-container *ngIf="!isLoading">-->
+<!--          <i class="fas fa-sign-in-alt"></i>-->
+<!--          Login-->
+<!--        </ng-container>-->
+<!--        <ng-container *ngIf="isLoading">-->
+<!--          <div class="spinner"></div>-->
+<!--        </ng-container>-->
+<!--      </button>-->
+
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; ══ PLACES TO VISIT ════════════════════════════════════════ &ndash;&gt;-->
+<!--<div class="places-container">-->
+<!--  <h1 class="places-title">-->
+<!--    <i class="fas fa-map-marked-alt" style="margin-right:14px;color:#ffd700"></i>-->
+<!--    Places To Visit Inside Infosys Mysore-->
+<!--  </h1>-->
+
+<!--  &lt;!&ndash; GEC — flip card &ndash;&gt;-->
+<!--  <div class="place-card">-->
+<!--    <div class="place-image">-->
+<!--      <div class="flip-card">-->
+<!--        <div class="flip-card-inner">-->
+<!--          <div class="flip-card-front">-->
+<!--            <img src="assets/gec1.jpeg" alt="GEC 1">-->
+<!--          </div>-->
+<!--          <div class="flip-card-back">-->
+<!--            <img src="assets/gec2.jpg" alt="GEC 2">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="place-info">-->
+<!--      <h2>-->
+<!--        <i class="fas fa-university" style="margin-right:12px;color:#ffd700"></i>-->
+<!--        Global Education Center (GEC)-->
+<!--      </h2>-->
+<!--      <p>-->
+<!--        The Global Education Center is the heart of Infosys Mysore Campus,-->
+<!--        known for its grand architecture, world-class training facilities,-->
+<!--        and beautiful surroundings. It is one of the most iconic and-->
+<!--        frequently visited places inside the campus.-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Multiplex &ndash;&gt;-->
+<!--  <div class="place-card">-->
+<!--    <div class="place-image">-->
+<!--      <img src="assets/multiplex.jpg" alt="Multiplex">-->
+<!--    </div>-->
+<!--    <div class="place-info">-->
+<!--      <h2>-->
+<!--        <i class="fas fa-film" style="margin-right:12px;color:#ffd700"></i>-->
+<!--        Multiplex-->
+<!--      </h2>-->
+<!--      <p>-->
+<!--        The Infosys Multiplex provides a great entertainment experience-->
+<!--        for trainees and employees with movie screenings, events, and-->
+<!--        relaxing recreational activities after working hours.-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Recreation Center &ndash;&gt;-->
+<!--  <div class="place-card">-->
+<!--    <div class="place-image">-->
+<!--      <img src="assets/recreation.jpeg" alt="Recreation Center">-->
+<!--    </div>-->
+<!--    <div class="place-info">-->
+<!--      <h2>-->
+<!--        <i class="fas fa-swimmer" style="margin-right:12px;color:#ffd700"></i>-->
+<!--        Recreation Center-->
+<!--      </h2>-->
+<!--      <p>-->
+<!--        The Recreation Center is a perfect place to relax and refresh,-->
+<!--        offering facilities like swimming pool, indoor games, gym,-->
+<!--        and other wellness activities for visitors and employees.-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--</div>-->
+
+<!--&lt;!&ndash; ══ DO'S & DON'TS ══════════════════════════════════════════ &ndash;&gt;-->
+<!--<div class="rules-section">-->
+
+<!--  <div class="rules-card dos-card">-->
+<!--    <h2><i class="fas fa-check-circle"></i> Do's</h2>-->
+<!--    <ul>-->
+<!--      <li *ngFor="let item of dosList">-->
+<!--        <i class="fas fa-check" style="color:#28a745;margin-right:8px;font-size:13px"></i>-->
+<!--        {{ item }}-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+
+<!--  <div class="rules-card donts-card">-->
+<!--    <h2><i class="fas fa-times-circle"></i> Don'ts</h2>-->
+<!--    <ul>-->
+<!--      <li *ngFor="let item of dontsList">-->
+<!--        <i class="fas fa-times" style="color:#dc3545;margin-right:8px;font-size:13px"></i>-->
+<!--        {{ item }}-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+
+<!--</div>-->
+
+
+<!--&lt;!&ndash; ══ VISITOR FEEDBACKS ══════════════════════════════════════ &ndash;&gt;-->
+<!--<div class="feedback-section">-->
+<!--  <h2 class="feedback-heading">-->
+<!--    <i class="fas fa-comments" style="margin-right:12px"></i>-->
+<!--    Visitor Feedbacks-->
+<!--  </h2>-->
+
+<!--  <div class="feedback-slider">-->
+<!--    <div class="feedback-track">-->
+
+<!--      &lt;!&ndash; First copy &ndash;&gt;-->
+<!--      <div class="feedback-card" *ngFor="let feedback of feedbacks">-->
+<!--        <div class="card-top">-->
+<!--          <h4>-->
+<!--            <i class="fas fa-user-circle"-->
+<!--               style="margin-right:8px;font-size:16px;opacity:.75"></i>-->
+<!--            {{ feedback.visitorName }}-->
+<!--          </h4>-->
+<!--          <span>-->
+<!--            <i class="fas fa-calendar-alt" style="margin-right:4px;opacity:.6"></i>-->
+<!--            {{ feedback.createdAt | date:'MMM d, y' }}-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <div class="stars">-->
+<!--          <i *ngFor="let star of [1,2,3,4,5]"-->
+<!--             class="fa-star"-->
+<!--             [ngClass]="feedback.rating >= star ? 'fas active-star' : 'far'">-->
+<!--          </i>-->
+<!--        </div>-->
+<!--        <p class="feedback-text">{{ feedback.feedbackText }}</p>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Duplicate copy — required for seamless infinite loop &ndash;&gt;-->
+<!--      <div class="feedback-card" *ngFor="let feedback of feedbacks">-->
+<!--        <div class="card-top">-->
+<!--          <h4>-->
+<!--            <i class="fas fa-user-circle"-->
+<!--               style="margin-right:8px;font-size:16px;opacity:.75"></i>-->
+<!--            {{ feedback.visitorName }}-->
+<!--          </h4>-->
+<!--          <span>-->
+<!--            <i class="fas fa-calendar-alt" style="margin-right:4px;opacity:.6"></i>-->
+<!--            {{ feedback.createdAt | date:'MMM d, y' }}-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <div class="stars">-->
+<!--          <i *ngFor="let star of [1,2,3,4,5]"-->
+<!--             class="fa-star"-->
+<!--             [ngClass]="feedback.rating >= star ? 'fas active-star' : 'far'">-->
+<!--          </i>-->
+<!--        </div>-->
+<!--        <p class="feedback-text">{{ feedback.feedbackText }}</p>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; ══ FOOTER ══════════════════════════════════════════════════ &ndash;&gt;-->
+<!--<footer class="landing-footer">-->
+<!--  <div class="footer-content">-->
+
+<!--    <div class="footer-left">-->
+<!--      <h3>-->
+<!--        <i class="fas fa-map-marker-alt footer-icon"></i>-->
+<!--        Infosys Mysore Address-->
+<!--      </h3>-->
+<!--      <p>-->
+<!--        No. 350, Hebbal Electronics City,<br>-->
+<!--        Hootagalli, Mysuru, Karnataka 570027-->
+<!--      </p>-->
+<!--    </div>-->
+
+<!--    <div class="footer-right">-->
+<!--      <h3>-->
+<!--        <i class="fas fa-phone-alt footer-icon"></i>-->
+<!--        Call at Office-->
+<!--      </h3>-->
+<!--      <p>Infosys Mysore</p>-->
+<!--      <h4>0821 240 4101</h4>-->
+<!--      <span>-->
+<!--        <i class="fas fa-clock" style="margin-right:5px;opacity:.7"></i>-->
+<!--        Mon – Fri, 8:00 – 22:00-->
+<!--      </span>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</footer>-->
+
+
+<!-- ══ LOGIN HERO — full viewport with GEC background ══════════ -->
+<div class="login-container">
+
+  <!-- Left: branding tagline (optional visual weight) -->
+  <div class="login-brand">
+
+  </div>
+
+  <!-- Right: glass login card -->
+  <div class="login-card">
+
+    <div class="login-header">
+      <div class="card-logo-icon">
+        <i class="fas fa-id-badge"></i>
+      </div>
+      <h2>Welcome Back</h2>
+      <p>Sign in to your account</p>
+    </div>
+
+    <!-- Server error alert -->
+    <div class="server-alert" *ngIf="errorMessage">
+      <i class="fas fa-exclamation-circle"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="loginEmail">
+          <i class="fas fa-envelope"></i> Email Address
+        </label>
+        <div class="input-wrapper">
+          <input id="loginEmail"
+                 type="email"
+                 formControlName="email"
+                 class="form-control"
+                 placeholder="you@example.com"
+                 autocomplete="email">
+        </div>
+        <div class="field-errors"
+             *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].dirty">
+          <span *ngIf="loginForm.controls['email'].errors!['required']">
+            <i class="fas fa-exclamation-triangle"></i> Email is required
+          </span>
+          <span *ngIf="loginForm.controls['email'].errors!['email']">
+            <i class="fas fa-exclamation-triangle"></i> Enter a valid email address
+          </span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="loginPassword">
+          <i class="fas fa-lock"></i> Password
+        </label>
+        <div class="input-wrapper">
+          <input id="loginPassword"
+                 type="password"
+                 formControlName="password"
+                 class="form-control"
+                 placeholder="Enter your password"
+                 autocomplete="current-password">
+        </div>
+        <div class="field-errors"
+             *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].dirty">
+          <span *ngIf="loginForm.controls['password'].errors!['required']">
+            <i class="fas fa-exclamation-triangle"></i> Password is required
+          </span>
+          <span *ngIf="loginForm.controls['password'].errors!['minlength']">
+            <i class="fas fa-exclamation-triangle"></i> Minimum 6 characters required
+          </span>
+          <span *ngIf="loginForm.controls['password'].errors!['pattern']">
+            <i class="fas fa-exclamation-triangle"></i> Invalid password format
+          </span>
+        </div>
+      </div>
+
+      <!-- Forgot link -->
+      <div class="forgot-row">
+        <a routerLink="/forgot-password">
+          <i class="fas fa-question-circle"></i> Forgot Password?
+        </a>
+      </div>
+
+      <!-- Login button -->
+      <button id="btn-login" type="submit" [disabled]="loginForm.invalid || isLoading">
+        <ng-container *ngIf="!isLoading">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </ng-container>
+        <ng-container *ngIf="isLoading">
+          <span class="btn-spinner"></span> Signing in…
+        </ng-container>
+      </button>
+
+    </form>
+  </div>
+</div>
+
+
+<!-- ══ DO'S & DON'TS ══════════════════════════════════════════ -->
+<div class="rules-section">
+  <div class="section-eyebrow">
+    <i class="fas fa-info-circle"></i> Campus Guidelines
+  </div>
+  <h2 class="section-heading">What You Need To Know</h2>
+
+  <div class="rules-grid">
+
+    <div class="rules-card dos-card">
+      <div class="rules-card-header">
+        <div class="rules-icon-wrap green">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Do's</h3>
+      </div>
+      <ul>
+        <li *ngFor="let item of dosList">
+          <i class="fas fa-check check-icon"></i>
+          <span>{{ item }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rules-card donts-card">
+      <div class="rules-card-header">
+        <div class="rules-icon-wrap red">
+          <i class="fas fa-times-circle"></i>
+        </div>
+        <h3>Don'ts</h3>
+      </div>
+      <ul>
+        <li *ngFor="let item of dontsList">
+          <i class="fas fa-times times-icon"></i>
+          <span>{{ item }}</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ PLACES TO VISIT ════════════════════════════════════════ -->
+<div class="places-container">
+  <div class="section-eyebrow light">
+    <i class="fas fa-map-pin"></i> Campus Highlights
+  </div>
+  <h2 class="section-heading light">Places To Visit Inside Infosys Mysore</h2>
+
+  <!-- GEC — flip card -->
+  <div class="place-card">
+    <div class="place-image">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="assets/gec1.jpeg" alt="GEC Front View">
+          </div>
+          <div class="flip-card-back">
+            <img src="assets/gec2.jpg" alt="GEC Side View">
+            <div class="flip-hint">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-label">
+        <i class="fas fa-hand-pointer"></i> Hover to flip
+      </div>
+    </div>
+    <div class="place-info">
+      <div class="place-tag"><i class="fas fa-star"></i> Iconic</div>
+      <h2><i class="fas fa-university"></i> Global Education Center</h2>
+      <p>
+        The Global Education Center is the heart of Infosys Mysore Campus,
+        renowned for its grand architecture, world-class training facilities,
+        and stunning surroundings. It is the most iconic landmark on campus.
+      </p>
+      <div class="place-stats">
+        <span><i class="fas fa-users"></i> 14,000+ trainees</span>
+        <span><i class="fas fa-building"></i> 27 blocks</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multiplex -->
+  <div class="place-card reverse">
+    <div class="place-image">
+      <img src="assets/multiplex.jpg" alt="Multiplex">
+    </div>
+    <div class="place-info">
+      <div class="place-tag"><i class="fas fa-film"></i> Entertainment</div>
+      <h2><i class="fas fa-film"></i> Multiplex</h2>
+      <p>
+        The Infosys Multiplex offers a great entertainment experience for
+        trainees and employees with movie screenings, cultural events, and
+        recreational activities after working hours.
+      </p>
+      <div class="place-stats">
+        <span><i class="fas fa-clock"></i> Open daily</span>
+        <span><i class="fas fa-ticket-alt"></i> Free screenings</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recreation Center -->
+  <div class="place-card">
+    <div class="place-image">
+      <img src="assets/recreation.jpeg" alt="Recreation Center">
+    </div>
+    <div class="place-info">
+      <div class="place-tag"><i class="fas fa-swimmer"></i> Wellness</div>
+      <h2><i class="fas fa-dumbbell"></i> Recreation Center</h2>
+      <p>
+        Relax and refresh at the Recreation Center, offering a swimming pool,
+        indoor games, gym, and other wellness facilities for visitors and
+        employees.
+      </p>
+      <div class="place-stats">
+        <span><i class="fas fa-swimming-pool"></i> Olympic pool</span>
+        <span><i class="fas fa-heartbeat"></i> Full gym</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══ VISITOR FEEDBACKS — infinite scroll ════════════════════ -->
+<div class="feedback-section">
+  <div class="section-eyebrow light">
+    <i class="fas fa-quote-left"></i> Testimonials
+  </div>
+  <h2 class="section-heading light">What Visitors Say</h2>
+
+  <div class="feedback-slider" *ngIf="feedbacks.length">
+    <!--
+      Two identical sets of cards. The track animates exactly -50%
+      (one full set), then jumps back to 0% — perfectly seamless.
+    -->
+    <div class="feedback-track">
+
+      <!-- Set 1 -->
+      <div class="feedback-card" *ngFor="let fb of feedbacks">
+        <div class="card-top">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">{{ fb.visitorName[0] }}</div>
+            <div>
+              <h4>{{ fb.visitorName }}</h4>
+              <span class="review-date">
+                <i class="fas fa-calendar-alt"></i>
+                {{ fb.createdAt | date:'MMM d, y' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="stars">
+          <i *ngFor="let star of [1,2,3,4,5]"
+             class="fa-star"
+             [ngClass]="fb.rating >= star ? 'fas active-star' : 'far inactive-star'">
+          </i>
+        </div>
+        <p class="feedback-text">
+          <i class="fas fa-quote-left quote-icon"></i>
+          {{ fb.feedbackText }}
+        </p>
+      </div>
+
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="feedback-card" *ngFor="let fb of feedbacks">
+        <div class="card-top">
+          <div class="reviewer-info">
+            <div class="reviewer-avatar">{{ fb.visitorName[0] }}</div>
+            <div>
+              <h4>{{ fb.visitorName }}</h4>
+              <span class="review-date">
+                <i class="fas fa-calendar-alt"></i>
+                {{ fb.createdAt | date:'MMM d, y' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="stars">
+          <i *ngFor="let star of [1,2,3,4,5]"
+             class="fa-star"
+             [ngClass]="fb.rating >= star ? 'fas active-star' : 'far inactive-star'">
+          </i>
+        </div>
+        <p class="feedback-text">
+          <i class="fas fa-quote-left quote-icon"></i>
+          {{ fb.feedbackText }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer class="landing-footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <div class="footer-logo"><i class="fas fa-shield-alt"></i></div>
+      <span>Infosys VMS</span>
+    </div>
+
+    <div class="footer-col">
+      <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
+      <p>No. 350, Hebbal Electronics City,<br>Hootagalli, Mysuru, Karnataka 570027</p>
+    </div>
+
+    <div class="footer-col">
+      <h4><i class="fas fa-phone-alt"></i> Contact</h4>
+      <p>Infosys Mysore Campus</p>
+      <p class="footer-phone">0821 240 4101</p>
+      <p class="footer-hours">
+        <i class="fas fa-clock"></i> Mon – Fri, 8:00 – 22:00
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4><i class="fas fa-link"></i> Quick Links</h4>
+      <a routerLink="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a routerLink="/forgot-password"><i class="fas fa-key"></i> Reset Password</a>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Infosys Limited · Visitor Management System</span>
+  </div>
+</footer>

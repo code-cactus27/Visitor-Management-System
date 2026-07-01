@@ -1,0 +1,25 @@
+<div class="export-page" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+  <div class="export-container">
+    <div class="export-icon">
+      <i class="fas fa-file-csv"></i>
+    </div>
+    <h3>Export Visitor Data</h3>
+    <p>Select a date range to generate and download a comprehensive CSV report of all visitor activities.</p>
+    <div class="form-group">
+      <label>Start Date</label>
+      <input type="date" class="form-control" [(ngModel)]="startDate">
+    </div>
+    <div class="form-group">
+      <label>End Date</label>
+      <input type="date" class="form-control" [(ngModel)]="endDate">
+    </div>
+    <button
+      class="btn-export"
+      [disabled]="!startDate || !endDate"
+      (click)="onDownload()"
+    >
+      <i class="fas fa-download"></i>
+      Download CSV Report
+    </button>
+  </div>
+</div>

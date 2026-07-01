@@ -1,0 +1,70 @@
+<div class="feedback-overlay" [ngClass]="themeService.isDark ? 'dark-mode' : 'light-mode'">
+  <div class="feedback-box">
+    <h3>Feedback Form</h3>
+    <!-- SUCCESS MESSAGE -->
+    <div *ngIf="successMessage" class="alert alert-success py-2">
+      {{ successMessage }}
+    </div>
+    <!-- ERROR MESSAGE -->
+    <div *ngIf="errorMessage" class="alert alert-danger py-2">
+      {{ errorMessage }}
+    </div>
+    <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+      <!-- VISITOR NAME -->
+      <div class="mb-3">
+        <label><b>Visitor Name:</b></label>
+        <input type="text" placeholder="Enter Name" class="form-control" formControlName="visitorName">
+        <div class="text-danger mt-1" *ngIf="feedbackForm.controls['visitorName'].invalid &&
+                   (feedbackForm.controls['visitorName'].dirty ||
+                   feedbackForm.controls['visitorName'].touched)">
+          Enter valid name.
+        </div>
+      </div>
+      <!-- VISITOR ID -->
+      <div class="mb-3">
+        <label><b>Visitor Id:</b></label>
+        <input type="text" placeholder="Enter Visitor Id" class="form-control" formControlName="visitorId">
+        <div class="text-danger mt-1" *ngIf="feedbackForm.controls['visitorId'].invalid &&
+                   (feedbackForm.controls['visitorId'].dirty ||
+                   feedbackForm.controls['visitorId'].touched)">
+          Enter valid Visitor ID
+          (Example: 260502K20653)
+        </div>
+      </div>
+      <!-- FEEDBACK -->
+      <div class="mb-3">
+        <label><b>Visitor Feedback:</b></label>
+        <textarea class="form-control" rows="4" placeholder="Enter feedback" formControlName="feedbackText">
+               </textarea>
+        <div class="text-danger mt-1" *ngIf="feedbackForm.controls['feedbackText'].invalid &&
+                   (feedbackForm.controls['feedbackText'].dirty ||
+                   feedbackForm.controls['feedbackText'].touched)">
+          Feedback must be minimum 10 characters.
+        </div>
+      </div>
+      <!-- STAR RATING -->
+      <div class="rating-section">
+        <label class="rating-label text-center d-block">
+          Rate Experience:
+        </label>
+        <div class="stars">
+          <i *ngFor="let star of [1,2,3,4,5]" class="fa-star"
+             [ngClass]="rating >= star ? 'fas active-star' : 'far'" (click)="setRating(star)">
+          </i>
+        </div>
+        <div class="text-danger text-center mt-2" *ngIf="ratingError">
+          Please select rating.
+        </div>
+      </div>
+      <!-- BUTTONS -->
+      <div class="feedback-actions">
+        <button class="btn btn-primary" type="submit" [disabled]="loading || feedbackForm.invalid">
+          {{ loading ? 'Submitting...' : 'Submit' }}
+        </button>
+        <button class="btn btn-danger" type="button" (click)="closeForm()" [disabled]="loading">
+          Close
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="cards">
+    <div class="card">
+      <div class="card-icon blue">
+        <i class="fa fa-users"></i>
+      </div>
+      <div class="card-content">
+        <h3>Total Visitors</h3>
+        <p>{{dashboardData.totalVisitors}}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon green">
+        <i class="fa fa-calendar-day"></i>
+      </div>
+      <div class="card-content">
+        <h3>Expected Today</h3>
+        <p>{{dashboardData.expectedToday}}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon purple">
+        <i class="fa fa-user-check"></i>
+      </div>
+      <div class="card-content">
+        <h3>Checked In</h3>
+        <p>{{dashboardData.checkedIn}}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon purple">
+        <i class="fa fa-sign-out-alt"></i>
+      </div>
+      <div class="card-content">
+        <h3>Checked Out</h3>
+        <p>{{dashboardData.checkedOut}}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon orange">
+        <i class="fa fa-clock"></i>
+      </div>
+      <div class="card-content">
+        <h3>Pending</h3>
+        <p>{{dashboardData.pending}}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon red">
+        <i class="fa fa-user-times"></i>
+      </div>
+      <div class="card-content">
+        <h3>Expired</h3>
+        <p>{{dashboardData.expired || 0}}</p>
+      </div>
+    </div>
+</div>
