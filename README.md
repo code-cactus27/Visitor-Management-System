@@ -449,17 +449,6 @@ Screenshots will be added as the application is run and verified.
  
 Suggested structure:
  
-```
-docs/
-└── screenshots/
-    ├── login.png
-    ├── dashboard.png
-    ├── visitor-management.png
-    ├── visit-management.png
-    ├── gate-pass.png
-    └── reports.png
-```
- 
 Once available, they can be displayed here:
  
 ### 🔐 Login
